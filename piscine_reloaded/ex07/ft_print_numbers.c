@@ -1,13 +1,25 @@
-int   ft_putchar(char c);
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_print_numbers.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nventres <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/04 16:49:38 by nventres          #+#    #+#             */
+/*   Updated: 2019/09/04 16:49:40 by nventres         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void ft_print_numbers(void)
+int		ft_putchar(char c);
+
+void	ft_print_numbers(void)
 {
-  int nb;
+	int nb;
 
-  nb = '0';
-  while (nb <= '9')
-  {
-    ft_putchar(nb);
-    nb++;
-  }
+	nb = '0';
+	while (nb <= '9')
+	{
+		ft_putchar(nb);
+		nb++;
+	}
 }

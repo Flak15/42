@@ -1,5 +1,5 @@
 NAME = ft_display_file
-SRCS = mail.c
+SRCS = main.c
 
 .PHONY: all clean fclean
 

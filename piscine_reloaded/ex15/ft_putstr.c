@@ -1,12 +1,24 @@
-int ft_putchar(char c);
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nventres <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/04 17:01:23 by nventres          #+#    #+#             */
+/*   Updated: 2019/09/04 17:01:24 by nventres         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void ft_putstr(char *str)
+int		ft_putchar(char c);
+
+void	ft_putstr(char *str)
 {
-  if (!str)
-    return ;
-  while (*str)
-  {
-    ft_putchar(*str);
-    str++;
-  }
+	if (!str)
+		return ;
+	while (*str)
+	{
+		ft_putchar(*str);
+		str++;
+	}
 }

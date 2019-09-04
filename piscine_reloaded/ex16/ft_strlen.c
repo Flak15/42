@@ -1,14 +1,26 @@
-int ft_strlen(char *str)
-{
-  int cnt;
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nventres <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/04 17:02:42 by nventres          #+#    #+#             */
+/*   Updated: 2019/09/04 17:02:43 by nventres         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-  cnt = 0;
-  if (!str)
-    return (0);
-  while (*str)
-  {
-    str++;
-    cnt++;
-  }
-  return (cnt);
+int	ft_strlen(char *str)
+{
+	int	cnt;
+
+	cnt = 0;
+	if (!str)
+		return (0);
+	while (*str)
+	{
+		str++;
+		cnt++;
+	}
+	return (cnt);
 }

@@ -1,11 +1,25 @@
-int   ft_putchar(char c);
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_print_alphabet.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nventres <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/04 16:43:12 by nventres          #+#    #+#             */
+/*   Updated: 2019/09/04 16:43:15 by nventres         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void ft_print_alphabet(void)
+int		ft_putchar(char c);
+
+void	ft_print_alphabet(void)
 {
-  int ch = 'a';
-  while (ch <= 'z')
-  {
-    ft_putchar(ch);
-    ch++;
-  }
+	int ch;
+
+	ch = 'a';
+	while (ch <= 'z')
+	{
+		ft_putchar(ch);
+		ch++;
+	}
 }
