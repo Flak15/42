@@ -9,7 +9,7 @@ void *memset(void *dst, int c, size_t n)
     {
 			*d = (unsigned char)c;
       d++;
-	    if (--n != 0)
+	    if (--n == 0)
         break;
     }
 	}

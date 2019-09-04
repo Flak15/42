@@ -1,4 +1,6 @@
-void *memcpy(void *dst0, const void *src0, size_t length) //add "restricted"
+#include <string.h>
+
+void *memcpy(void *restrict dst0, const void *restrict src0, size_t length)
 {
   char *dst = dst0;
 	const char *src = src0;
@@ -6,9 +8,6 @@ void *memcpy(void *dst0, const void *src0, size_t length) //add "restricted"
 
   if (length == 0 || dst == src)
   		return (dst0);
-  // if ((dst < src && dst + length > src) || 
-	//     (src < dst && src + length > dst))
-  //     return (0);
   while (length--)
       *dst++ = *src++;
   return (dst0);
