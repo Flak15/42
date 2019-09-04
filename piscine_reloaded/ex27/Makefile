@@ -3,7 +3,9 @@ SRCS = main.c
 
 .PHONY: all clean fclean
 
-all:
+all: $(NAME)
+
+$(NAME):
 	@gcc -Wall -Wextra -Werror -o $(NAME) $(SRCS)
 
 clean:
@@ -11,3 +13,5 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
+
+re: fclean all
