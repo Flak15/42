@@ -2,9 +2,9 @@
 
 void *memset(void *dst, int c, size_t n)
 {
+	unsigned char *d;
 	if (n != 0) {
-		unsigned char *d = dst;
-
+		d = dst;
 		while (1)
     {
 			*d = (unsigned char)c;
