@@ -1,29 +1,28 @@
 char *ft_strstr(const char *str0, const char *to_find0) //to fix
 {
-   char *str;
-   char *to_find;
-  to_find = to_find0;
-  str = str0;
-  char *s;
-  char *f;
+    char *str;
+    char *to_find;
+    to_find = to_find0;
+    str = str0;
+    char *s;
+    char *f;
 
-  if (!to_find)
-    return str;
-
-  while (*str)
-  {
-    s = str;
-    f = to_find;
-    while (*s && *f && !(*f - *s))
+    if (!to_find)
+        return str;
+    while (*str)
     {
-      s++;
-      f++;
+        s = str;
+        f = to_find;
+        while (*s && *f && !(*f - *s))
+        {
+            s++;
+            f++;
+        }
+        if (!*f)
+            return (str);
+        str++;
     }
-    if (!*f)
-      return (str);
-    str++;
-  }
-  return (0);
+    return (0);
 }
 
 // char    *my_strstr(const char *haystack, const char *needle)
