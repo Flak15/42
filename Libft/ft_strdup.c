@@ -1,7 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-static size_t strlen(const char *s)
+static size_t ft_strlen(const char *str)
 {
   const char *s;
 
@@ -16,7 +16,6 @@ ft_memcpy(void *restrict dst0, const void *restrict src0, size_t length)
 {
   char *dst = dst0;
 	const char *src = src0;
-	size_t t;
 
   if (length == 0 || dst == src)
   		return (dst0);
@@ -25,7 +24,7 @@ ft_memcpy(void *restrict dst0, const void *restrict src0, size_t length)
   return (dst0);
 }
 
-char *strdup(const char *s)
+char *ft_strdup(const char *str)
 {
   size_t size;
   char *copy;
@@ -34,6 +33,6 @@ char *strdup(const char *s)
   copy = malloc(size);
   if (copy == NULL)
     return(NULL);
-  ft_memcpy(copy, s, size);
+  ft_memcpy(copy, str, size);
   return(copy);
 }

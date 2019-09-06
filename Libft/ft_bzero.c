@@ -1,10 +1,10 @@
 #include <string.h>
 
-void  bzero(void *b, size_t length)
+void  ft_bzero(void *b, size_t length)
 {
 	char *p;
 
   p = b;
   while (length--)
-    *p++ = '\0';	
+    *p++ = '\0';
 }

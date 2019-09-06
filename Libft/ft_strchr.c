@@ -1,4 +1,4 @@
-char *strchr(const char *p, int ch)
+char *ft_strchr(const char *p, int ch)
 {
 	while (1) {
 		if (*p == (char) ch)

@@ -5,7 +5,7 @@ static void *ft_memalloc(size_t size)
   return (malloc(size));
 }
 
-static void  bzero(void *b, size_t length)
+static void  ft_bzero(void *b, size_t length)
 {
 	char *p;
 
@@ -20,6 +20,6 @@ char *ft_strnew(size_t size)
   str = malloc(size);
   if (!str)
     return (NULL);
-  bzero(str, size);
+  ft_bzero(str, size);
   return ((char *)str);
 }

@@ -1,6 +1,6 @@
 #include <string.h>
 
-char *strcat(char *str, const char *append)
+char *ft_strcat(char *str, const char *append)
 {
   char *save;
 

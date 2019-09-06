@@ -1,11 +1,11 @@
 #include <string.h>
 
-char *strcpy(char *dest, const char *src)
+char *ft_strcpy(char *dest, const char *src)
 {
   char *save;
 
   save = dest;
-  while (*dest = *src)
+  while ((*dest = *src))
   {
     dest++;
     src++;
