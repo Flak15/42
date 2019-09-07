@@ -1,9 +1,9 @@
 #include <string.h>
 
-char *ft_strncpy(char *dest, const char *src, size_t n)
+char *ft_strncpy(char *dst, const char *src, size_t n)
 {
   char *d = dst;
-  char *s = src;
+  char *s = (char *)src;
 
   if (n)
   {
