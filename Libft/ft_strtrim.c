@@ -60,17 +60,6 @@ char *ft_strtrim(char const *s)
 	ns = (char *)malloc(end - start + 2);
 	if (!ns)
 		return (NULL);
-	// *ns = *start;
 	ft_strncpy(ns, start, end - start + 1);
-	// printf("len:%ld\n", end - start + 1);
-	printf("%s", ns);
 	return (ns);
-}
-
-int main(void)
-{
-
-	char str[] = "   1234567 11   ";
-	ft_strtrim(str);
-	return (0);
 }
