@@ -5,7 +5,7 @@ NAME = libft.a
 all: $(NAME)
 
 $(NAME):
-	@gcc -Wall -Werror -Wextra -c *.c -I libft.h 
+	@gcc -Wall -Werror -Wextra -c *.c  
 	@ar rc $(NAME) *.o
 
 clean:
