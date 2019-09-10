@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+
 static char *ft_strsub(char const *s, unsigned int start, size_t len)
 {
     char *ns;
@@ -63,11 +65,22 @@ char	**ft_split_whitespaces(char *str, char c)
 	return (save_s);
 }
 
+static int count_words(char *s, char delim)
+{
+    static int wcount = 0;
+
+    while (*s)
+    {
+        
+    }
+
+}
+
 int main(void)
 {
-    char **r;
-    r = ft_split_whitespaces(":::::abc:ggg:ooo:xxx", ':');
+    // char **r;
+    // r = ft_split_whitespaces(":::::abc:::ggg::ooo:xxx", ':');
     // for (int i= 0; i < 4; i++)
-        printf("%s\n", r[3]);
+    printf("%d\n", count_words(":::::abc:::ggg::ooo:xxx", ':'));
     return (0);
 }
