@@ -21,20 +21,44 @@ static char *ft_strsub(char const *s, unsigned int start, size_t len)
     return (res);
 }
 
-char **ft_strsplit(char const *s, char c)
+
+static int count_words(char *str, char delim)
 {
-    char **ss;
+    int state = 0; 
+    unsigned wc = 0;
 
-    if (!s)
-        return (NULL);
-
-    ss = NULL;
-    while(*s == c)
-        s++;
-    
-    printf("%c", *s);
-    return (ss);
+    while (*str) 
+    {
+        if (*str == delim) 
+            state = 0;
+        else if (state == 0) 
+        { 
+            state = 1; 
+            ++wc; 
+        }
+        ++str; 
+    } 
+    return (wc); 
 }
+
+// char **ft_strsplit(char const *s, char c)
+// {
+//     char **ss;
+
+//     if (!s)
+//         return (NULL);
+
+    
+
+//     ss = malloc((count_words(s, c) + 1) * sizeof(char *));
+//     if (!ss)
+//         return 0;
+//     while(*s == c)
+//         s++;
+    
+//     printf("%c", *s);
+//     return (ss);
+// }
 
 char	**ft_split_whitespaces(char *str, char c)
 {
@@ -45,14 +69,12 @@ char	**ft_split_whitespaces(char *str, char c)
 
 	temp_str = str;
 	strlen = 0;
-	while (*temp_str++)
-		;
-	s = (char **)malloc(sizeof(char *) * ((temp_str - str) / 2 + 1));
+	s = (char **)malloc((count_words(str, c) + 1) * sizeof(char *));
 	save_s = s;
 	while (1)
 	{
 		temp_str = (*str != c && strlen == 0) ? str : temp_str;
-		if (*str == c && strlen > 0)
+		if ((*str == c || *str == '\0') && strlen > 0)
 		{
 			*s++ = ft_strsub(temp_str, 0, strlen);
 			strlen = 0;
@@ -65,22 +87,12 @@ char	**ft_split_whitespaces(char *str, char c)
 	return (save_s);
 }
 
-static int count_words(char *s, char delim)
-{
-    static int wcount = 0;
-
-    while (*s)
-    {
-        
-    }
-
-}
-
 int main(void)
 {
     // char **r;
     // r = ft_split_whitespaces(":::::abc:::ggg::ooo:xxx", ':');
-    // for (int i= 0; i < 4; i++)
-    printf("%d\n", count_words(":::::abc:::ggg::ooo:xxx", ':'));
+    for (int i= 0; i < 4; i++)
+   
+        printf("%s\n", ft_split_whitespaces("aaa:::::bbb:::cc", ':')[i]);
     return (0);
 }
