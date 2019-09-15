@@ -11,7 +11,7 @@ static size_t ft_strlen(const char *str)
     return (s - str);
 }
 
-char *ft_strmap(char const *s, char (*f)(unsigned int, char))
+char *ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
 	size_t len;
 	char *ns;

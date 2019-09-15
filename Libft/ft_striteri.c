@@ -1,10 +1,11 @@
-void ft_striteri(char *s, void (*f)(unsigned int, char *))
+void ft_striteri(char *str, void (*f)(unsigned int, char *))
 {
   int cnt;
 
   cnt = 0;
-  if (!s)
-    return (NULL);
+  if (!str)
+    return ;
   while(*str)
-    *s = (*f)(cnt++, *s++);
+    (*f)(cnt++, str++);
+
 }

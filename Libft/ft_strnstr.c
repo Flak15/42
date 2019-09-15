@@ -10,7 +10,7 @@ static size_t   ft_strlen(const char *str)
 	return (s - str);
 }
 
-static  int		ft_strncmp(char *s1, char *s2, size_t n)
+static  int		ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	if (n == 0)
 		return (0);
@@ -26,7 +26,7 @@ static  int		ft_strncmp(char *s1, char *s2, size_t n)
 	return (0);
 }
 
-char            *strnstr(const char *s, const char *find, size_t slen)
+char	*ft_strnstr(const char *s, const char *find, size_t slen)
 {
 	char c;
     char save_c;
@@ -52,3 +52,15 @@ char            *strnstr(const char *s, const char *find, size_t slen)
 	}
 	return ((char *)s);
 }
+// #include <stdio.h>
+
+// int main(void)
+// {
+// 	const char *largestring = "Foo Bar Baz";
+// 	const char *smallstring = "Bar";
+// 	char *ptr;
+
+// 	ptr = strnstr(largestring, smallstring, 11);
+// 	printf("%s", ptr);
+// 	return (0);
+// }

@@ -1,10 +1,5 @@
 #include <stdlib.h>
 
-static void *ft_memalloc(size_t size)
-{
-  return (malloc(size));
-}
-
 static void  ft_bzero(void *b, size_t length)
 {
 	char *p;

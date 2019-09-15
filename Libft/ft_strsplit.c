@@ -60,7 +60,7 @@ static int count_words(char *str, char delim)
 //     return (ss);
 // }
 
-char	**ft_split_whitespaces(char *str, char c)
+char	**ft_strsplit(char *str, char c)
 {
 	int		strlen;
 	char	*temp_str;
@@ -87,12 +87,12 @@ char	**ft_split_whitespaces(char *str, char c)
 	return (save_s);
 }
 
-int main(void)
-{
-    // char **r;
-    // r = ft_split_whitespaces(":::::abc:::ggg::ooo:xxx", ':');
-    for (int i= 0; i < 4; i++)
+// int main(void)
+// {
+//     // char **r;
+//     // r = ft_split_whitespaces(":::::abc:::ggg::ooo:xxx", ':');
+//     for (int i= 0; i < 4; i++)
    
-        printf("%s\n", ft_split_whitespaces("aaa:::::bbb:::cc", ':')[i]);
-    return (0);
-}
+//         printf("%s\n", ft_split_whitespaces("aaa:::::bbb:::cc", ':')[i]);
+//     return (0);
+// }

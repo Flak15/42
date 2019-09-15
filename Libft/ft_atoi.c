@@ -91,15 +91,15 @@ int ft_atoi(char *str) {
 
     return (n);
 }
-#include <stdio.h>
+// #include <stdio.h>
 
-#include <stdlib.h>
-int main(void)
-{
-    char *str = "9223372036854775809";
-    printf("Lng max: %ld\n", LONG_MAX);
-    printf("Lng max: %lld\n", LLONG_MAX);
-    printf("my: %d\n", ft_atoi(str));
-    printf("or: %d\n", atoi(str));
-    return (0);
-}
+// #include <stdlib.h>
+// int main(void)
+// {
+//     char *str = "9223372036854775809";
+//     printf("Lng max: %ld\n", LONG_MAX);
+//     printf("Lng max: %lld\n", LLONG_MAX);
+//     printf("my: %d\n", ft_atoi(str));
+//     printf("or: %d\n", atoi(str));
+//     return (0);
+// }
