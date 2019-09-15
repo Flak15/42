@@ -1,6 +1,7 @@
 #ifndef LIBFT_H
-#define LIBFT_H
-#include <string.h>
+# define LIBFT_H
+# include <string.h>
+
 int     ft_atoi(char *str);
 void	ft_bzero(void *b, size_t length);
 void	*ft_memset(void *dst, int c, size_t n);

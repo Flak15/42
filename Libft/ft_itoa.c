@@ -1,5 +1,3 @@
-#include <string.h>
-
 #define INT_DIGITS 19
 
 char *ft_itoa(int num)
@@ -28,10 +26,3 @@ char *ft_itoa(int num)
     }
     return (ptr);
 }
-#include <stdio.h>
-
-// int main(void)
-// {
-//     printf("%s\n", ft_itoa(1));
-//     return (0);
-// }

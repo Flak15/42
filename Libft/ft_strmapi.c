@@ -1,15 +1,5 @@
-#include <string.h>
+#include "libft.h"
 #include <stdlib.h>
-
-static size_t ft_strlen(const char *str)
-{
-    const char *s;
-
-    s = str;
-    while (*s)
-        s++;
-    return (s - str);
-}
 
 char *ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
@@ -28,7 +18,7 @@ char *ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	save_ns = ns;
 	while(*s)
 	{
-		*ns = (*f)(cnt++, *s++);
+		*ns = f(cnt++, *s++);
 		ns++;
 	}
 	return (save_ns);

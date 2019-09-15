@@ -1,19 +1,9 @@
-#include <stdlib.h>
-
-static size_t ft_strlen(const char *str)
-{
-    const char *s;
-
-    s = str;
-    while (*s)
-        s++;
-    return (s - str);
-}
+#include "libft.h"
 
 char *ft_strjoin(char const *s1, char const *s2)
 {
-    size_t len;
-    char *ns;
+    size_t  len;
+    char    *ns;
 
     if (!s1 || !s2)
         return (NULL);

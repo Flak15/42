@@ -1,22 +1,18 @@
-#include <string.h>
+#include "libft.h"
 
 char *ft_strncat(char *str, const char *append, size_t n)
 {
-  char *save;
-  if (n == 0)
+    size_t len1 = strlen(str);
+    size_t len2 = strlen(append);
+    
+    if (len2 < n) 
+    {
+	    strcpy(&str[len1], append);
+    } 
+    else 
+    {
+        strncpy(&str[len1], append, n);
+        str[len1 + n] = '\0';
+    }
     return (str);
-
-  save = str;
-  while (*str)
-    str++;
-  while (n != 1)
-  {
-    if (!(*str = *append))
-      return (save);
-    ++str;
-    ++append;
-    --n;
-  }
-  *str = 0;
-  return (save);
 }

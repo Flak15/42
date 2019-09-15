@@ -1,20 +1,10 @@
-#include <string.h>
-
-static size_t ft_strlen(const char *s)
-{
-	const char *str;
-
-	str = s;
-	while (*s)
-		s++;
-	return (s - str);
-}
+#include "libft.h"
 
 size_t ft_strlcat(char *dest, const char *src, size_t size)
 {
-  const char		*savedest;
-	unsigned int	n;
-	int				handled_len;
+    const char	*savedest;
+	size_t	    n;
+	size_t		handled_len;
 
 	savedest = dest;
 	n = size;

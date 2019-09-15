@@ -1,10 +1,10 @@
-#include <string.h>
+#include "libft.h"
 
 void  ft_bzero(void *b, size_t length)
 {
 	char *p;
 
-	p = b;
+	p = (char *)b;
 	while (length--)
 		*p++ = '\0';
 }

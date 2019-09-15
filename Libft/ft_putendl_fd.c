@@ -1,15 +1,7 @@
-#include <unistd.h>
-
-static void ft_putstr_fd(char const *s, int fd)
-{
-    if (!s)
-        return ;
-    while (*s)
-        write(fd, s, 1);
-}
+#include "libft.h"
 
 void ft_putendl_fd(char const *s, int fd)
 {
-    ft_putstr_fd(s, fd);
-    write(fd, "\n", 1);
+    ft_putstr_fd((char *)s, fd);
+    ft_putchar_fd('\n', fd);
 }

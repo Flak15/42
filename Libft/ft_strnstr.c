@@ -1,30 +1,4 @@
-#include <string.h>
-
-static size_t   ft_strlen(const char *str)
-{
-  const char *s;
-
-  s = str;
-  while (*s)
-    s++;
-	return (s - str);
-}
-
-static  int		ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	if (n == 0)
-		return (0);
-	while (n > 0)
-	{
-		if (*s1 != *s2++)
-			return (*s1 - *(s2 - 1));
-		if (!*s1)
-			return (0);
-		s1++;
-		n--;
-	}
-	return (0);
-}
+#include "libft.h"
 
 char	*ft_strnstr(const char *s, const char *find, size_t slen)
 {
@@ -52,15 +26,3 @@ char	*ft_strnstr(const char *s, const char *find, size_t slen)
 	}
 	return ((char *)s);
 }
-// #include <stdio.h>
-
-// int main(void)
-// {
-// 	const char *largestring = "Foo Bar Baz";
-// 	const char *smallstring = "Bar";
-// 	char *ptr;
-
-// 	ptr = strnstr(largestring, smallstring, 11);
-// 	printf("%s", ptr);
-// 	return (0);
-// }

@@ -1,18 +1,21 @@
-#include <string.h>
+#include "libft.h"
 
 void *ft_memccpy(void *restrict dst, const void *restrict src, int c, size_t n)
 {
-  unsigned char *tp = dst;
-  const unsigned char *fp = src;
-  unsigned char uc = c;
+    unsigned char *dp;
+    unsigned char *sp;
+    unsigned char uc
 
+    uc = (unsigned char)c;
+    dp = (unsigned char)dst;
+    sp = (unsigned char)src;
 	if (n)
 		while (1)
-    {
-			if ((*tp++ = *fp++) == uc)
-				return (tp);
-      if (--n == 0)
-        break;
+        {
+			if ((*dp++ = *sp++) == uc)
+				return ((void *)dp);
+            if (--n == 0)
+                break;
 		}
 	return (0);
 }
