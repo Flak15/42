@@ -4,7 +4,7 @@ char *ft_strrchr(const char *p, int ch)
 
 	save = 0;
 	while (1)
-  {
+  	{
 		if (*p == (char) ch)
 			save = (char *)p;
 		if (!*p)

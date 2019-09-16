@@ -1,32 +1,13 @@
-#include <stdio.h>
 #include <stdlib.h>
-
-
-
-static char *ft_strsub(char const *s, unsigned int start, size_t len)
-{
-    char *ns;
-    char *res;
-
-    if (!len)
-        return (NULL);
-    ns = (char *)malloc(len + 1);
-    res = ns;
-    if (!ns)
-        return (NULL);
-    while(start--)
-        s++;
-    while(len--)
-        *ns++ = *s++;
-    return (res);
-}
-
+#include "libft.h"
 
 static int count_words(char *str, char delim)
 {
-    int state = 0; 
-    unsigned wc = 0;
+    int state; 
+    unsigned wc;
 
+    state = 0;
+    wc = 0;
     while (*str) 
     {
         if (*str == delim) 
@@ -41,39 +22,20 @@ static int count_words(char *str, char delim)
     return (wc); 
 }
 
-// char **ft_strsplit(char const *s, char c)
-// {
-//     char **ss;
-
-//     if (!s)
-//         return (NULL);
-
-    
-
-//     ss = malloc((count_words(s, c) + 1) * sizeof(char *));
-//     if (!ss)
-//         return 0;
-//     while(*s == c)
-//         s++;
-    
-//     printf("%c", *s);
-//     return (ss);
-// }
-
-char	**ft_strsplit(char *str, char c)
+char	**ft_strsplit(char const *str, char c)
 {
 	int		strlen;
 	char	*temp_str;
 	char	**s;
 	char	**save_s;
 
-	temp_str = str;
+	temp_str = (char *)str;
 	strlen = 0;
-	s = (char **)malloc((count_words(str, c) + 1) * sizeof(char *));
+	s = (char **)malloc((count_words(temp_str, c) + 1) * sizeof(char *));
 	save_s = s;
 	while (1)
 	{
-		temp_str = (*str != c && strlen == 0) ? str : temp_str;
+		temp_str = (*str != c && strlen == 0) ? (char *)str : temp_str;
 		if ((*str == c || *str == '\0') && strlen > 0)
 		{
 			*s++ = ft_strsub(temp_str, 0, strlen);
@@ -86,13 +48,3 @@ char	**ft_strsplit(char *str, char c)
 	*s = 0;
 	return (save_s);
 }
-
-// int main(void)
-// {
-//     // char **r;
-//     // r = ft_split_whitespaces(":::::abc:::ggg::ooo:xxx", ':');
-//     for (int i= 0; i < 4; i++)
-   
-//         printf("%s\n", ft_split_whitespaces("aaa:::::bbb:::cc", ':')[i]);
-//     return (0);
-// }

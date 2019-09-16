@@ -1,28 +1,30 @@
 NAME = libft.a
 
-.PHONY: clean fclean re all
+SRCS = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c ft_memchr.c \
+ft_memcmp.c ft_strlen.c ft_strdup.c ft_strcpy.c ft_strncpy.c ft_strcat.c \
+ft_strncat.c ft_strlcat.c ft_strchr.c ft_strrchr.c ft_strstr.c ft_strnstr.c \
+ft_strcmp.c ft_strncmp.c ft_atoi.c ft_isalpha.c ft_isdigit.c ft_isalnum.c \
+ft_isascii.c ft_isprint.c ft_toupper.c ft_tolower.c \
+ft_memalloc.c ft_memdel.c ft_strnew.c ft_strdel.c ft_strclr.c ft_striter.c \
+ft_striteri.c ft_strmap.c ft_strmapi.c ft_strequ.c ft_strnequ.c ft_strsub.c \
+ft_strjoin.c ft_strtrim.c ft_strsplit.c ft_itoa.c ft_putchar.c ft_putstr.c \
+ft_putendl.c ft_putnbr.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c \
+ft_putnbr_fd.c 
 
-ft_memset ft_bzero ft_memcpy ft_memccpy ft_memmove ft_memchr \
-ft_memcmp ft_strlen ft_strdup ft_strcpy ft_strncpy ft_strcat \
-ft_strncat ft_strlcat ft_strchr ft_strrchr ft_strstr ft_strnstr \
-ft_strcmp ft_strncmp ft_atoi ft_isalpha ft_isdigit ft_isalnum \
-ft_isascii ft_isprint ft_toupper ft_tolower\
-ft_memalloc ft_memdel ft_strnew ft_strdel ft_strclr ft_striter \
-ft_striteri ft_strmap ft_strmapi ft_strequ ft_strnequ ft_strsub \
-ft_strjoin ft_strtrim ft_strsplit ft_itoa ft_putchar ft_putstr \
-ft_putendl ft_putnbr ft_putchar_fd ft_putstr_fd ft_putendl_fd \
-ft_putnbr_fd 
+OBJ = $(SRCS:%.c=%.o)
 
 all: $(NAME)
 
-$(NAME):
-	@gcc -Wall -Werror -Wextra -c *.c  
-	@ar rc $(NAME) *.o
+$(NAME): $(SRCS) libft.h
+	@gcc -Wall -Werror -Wextra -I ./ -c $(SRCS)  
+	@ar rc $(NAME) $(OBJ)
 
 clean:
-	@rm -f *.o
+	@rm -f $(OBJ)
 
 fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all
+
+.PHONY: clean fclean re all
