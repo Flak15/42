@@ -17,7 +17,7 @@ OBJ = $(SRCS:%.c=%.o)
 all: $(NAME)
 
 $(NAME): $(SRCS) libft.h
-	@gcc -Wall -Werror -Wextra -I ./ -c $(SRCS)  
+	@gcc -Wall -Werror -Wextra -c $(SRCS)  
 	@ar rc $(NAME) $(OBJ)
 
 clean:
