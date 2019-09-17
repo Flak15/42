@@ -20,6 +20,8 @@ char *ft_strtrim(char const *s)
 	end = (char *)s + len - 1;
 	while (ft_isspace(*start))
 		start++;
+	if (!*start)			
+		return (start);
 	while (ft_isspace(*end))
 		end--;
 	ns = (char *)malloc(end - start + 2);

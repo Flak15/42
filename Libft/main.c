@@ -5,11 +5,10 @@ int main(void)
 {
     char s[] = "";
     char s1[] = "";
-
-    if (ft_strstr(s, s1) == strstr(s, s1))
-    {
-        printf("sss");
-    }
+    int res = strcmp(ft_strtrim("\t\t\n\t\t   "), "");
+    // int res = strcmp("", "");
+    printf("%d", res);
+    // ft_putstr(ft_strtrim("\t\t\n\t\t   "));
     
     return (0);
 }
