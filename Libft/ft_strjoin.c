@@ -17,5 +17,5 @@ char *ft_strjoin(char const *s1, char const *s2)
     while (*s2)
         *ns++ = *s2++;
     *ns = '\0';
-    return (ns);
+    return (ns - len);
 }

@@ -6,16 +6,7 @@ char *ft_itoa(int num)
     char *ptr;
 
     ptr = buf + INT_DIGITS + 1;
-    if (num >= 0)
-    {
-        while (num != 0) 
-        {
-            *--ptr = '0' + (num % 10);
-            num /= 10;
-        } 
-        return (ptr);
-    }
-    else
+    if (num < 0)
     {
         while (num != 0) 
         {
@@ -23,6 +14,15 @@ char *ft_itoa(int num)
             num /= 10;
         }
         *--ptr = '-';
+        return (ptr);
     }
+    else
+        while (1) 
+        {
+            *--ptr = '0' + (num % 10);
+            num /= 10;
+            if (num == 0)
+                break ;
+        }
     return (ptr);
 }

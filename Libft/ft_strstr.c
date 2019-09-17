@@ -1,9 +1,11 @@
+#include "libft.h"
+
 char *ft_strstr(const char *str, const char *to_find)
 {
     char *s;
     char *f;
 
-    if (!to_find)
+    if (!*to_find)
         return ((char *)str);
     while (*str)
     {
@@ -18,5 +20,5 @@ char *ft_strstr(const char *str, const char *to_find)
             return ((char *)str);
         str++;
     }
-    return (0);
+    return (NULL);
 }
