@@ -21,5 +21,6 @@ char *ft_strmapi(char const *s, char (*f)(unsigned int, char))
 		*ns = f(cnt++, *s++);
 		ns++;
 	}
+	*ns = '\0';
 	return (save_ns);
 }

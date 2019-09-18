@@ -11,7 +11,7 @@ char *ft_strncpy(char *dst, const char *src, size_t n)
         while (1)
         {
             *d++ = *s++;
-            if (*s == '\0')
+            if (*(s - 1) == '\0')
             {
                 while (--n != 0)
                 {

@@ -1,6 +1,6 @@
 NAME = libft.a
 
-SRCS = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c ft_memchr.c \
+SRC = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c ft_memchr.c \
 ft_memcmp.c ft_strlen.c ft_strdup.c ft_strcpy.c ft_strncpy.c ft_strcat.c \
 ft_strncat.c ft_strlcat.c ft_strchr.c ft_strrchr.c ft_strstr.c ft_strnstr.c \
 ft_strcmp.c ft_strncmp.c ft_atoi.c ft_isalpha.c ft_isdigit.c ft_isalnum.c \
@@ -12,20 +12,26 @@ ft_putendl.c ft_putnbr.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c \
 ft_putnbr_fd.c ft_lstnew.c ft_lstdelone.c ft_lstdel.c ft_lstadd.c \
 ft_lstiter.c ft_lstmap.c
 
-OBJ = $(SRCS:%.c=%.o)
+SRC_OBJ = $(SRC:.c=.o)
+
+COMPILE = @gcc -Wall -Wextra -Werror -c
 
 all: $(NAME)
 
-$(NAME): $(SRCS) libft.h
-	@gcc -Wall -Werror -Wextra -c $(SRCS)  
-	@ar rc $(NAME) $(OBJ)
+$(NAME): $(SRC_OBJ)
+	@ar rc $(NAME) $(SRC_OBJ)
+	@ranlib $(NAME)
 
 clean:
-	@rm -f $(OBJ)
+	@/bin/rm -f $(SRC_OBJ)
+	@/bin/rm -f *~
 
 fclean: clean
-	@rm -f $(NAME)
+	@/bin/rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: clean fclean re all
+.c.o:
+	$(COMPILE) $< -o $@
+
+.PHONY: clean fclean all re update

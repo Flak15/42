@@ -3,20 +3,16 @@
 char	*ft_strnstr(const char *s, const char *find, size_t slen)
 {
 	size_t	flen;
-	int		lastresult;
+	int		res;
 
-	if (*find == '\0')
-		return ((char*)s);
+	if (!*find)
+		return ((char *)s);
 	flen = ft_strlen(find);
-	lastresult = 1;
-	while (flen <= slen && *s != '\0' && lastresult)
+	res = 1;
+	while (*s && flen <= slen && (res = ft_strncmp(s, find, flen)))
 	{
-		lastresult = ft_strncmp(s, find, flen);
 		slen--;
 		s++;
 	}
-	if (lastresult != 0)
-		return (NULL);
-	else
-		return ((char *)s);
+	return (res ? NULL : (char *)s);
 }

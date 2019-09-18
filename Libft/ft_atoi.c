@@ -1,6 +1,6 @@
-#define LONG_MAX 9223372036854775807
-#define LONG_MIN -9223372036854775808
-
+#define LONG_MAX 9223372036854775807U
+#define LONG_MIN -9223372036854775808U
+#include <stdio.h>
 static int ft_isspace(int c)
 {
   return (c == '\t' || c == '\n' ||
@@ -16,6 +16,7 @@ int ft_atoi(char *str) {
 
     i = 0;
     n = 0;
+	sign = 0;
     while (ft_isspace(str[i]))
         i++;
     if (str[i] == '-' || str[i] == '+') 
@@ -26,22 +27,22 @@ int ft_atoi(char *str) {
         cutoff = sign ? (unsigned long)LONG_MIN : LONG_MAX;
         cutlim = cutoff % 10;
         if (n > cutoff || (n == cutoff && str[i] > cutlim))
+        {
+            printf("here");
             return (sign ? (int)LONG_MIN : (int)LONG_MAX);
+        }
+            
         i++;
     }
  	if (sign)
 		n = -n;
-    return ((int)n);
+  	return ((int)n);
 }
-// #include <stdio.h>
 
-// #include <stdlib.h>
-// int main(void)
-// {
-//     char *str = "9223372036854775809";
-//     printf("Lng max: %ld\n", LONG_MAX);
-//     printf("Lng max: %lld\n", LLONG_MAX);
-//     printf("my: %d\n", ft_atoi(str));
-//     printf("or: %d\n", atoi(str));
-//     return (0);
-// }
+#include <stdlib.h>
+int main(void)
+{
+    printf("%d\n", ft_atoi("19223372036854775809"));
+    printf("%d\n", atoi("19223372036854775809"));
+    return (0);
+}

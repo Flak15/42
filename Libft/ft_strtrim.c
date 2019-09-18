@@ -28,5 +28,6 @@ char *ft_strtrim(char const *s)
 	if (!ns)
 		return (NULL);
 	ft_strncpy(ns, start, end - start + 1);
+	*(ns + (end - start) + 1) = '\0';
 	return (ns);
 }

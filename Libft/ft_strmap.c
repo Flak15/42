@@ -19,5 +19,6 @@ char *ft_strmap(char const *s, char (*f)(char))
 		*ns = f(*s++);
 		ns++;
 	}
+	*ns = '\0';
 	return (save_ns);
 }
