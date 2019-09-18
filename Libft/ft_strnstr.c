@@ -2,27 +2,21 @@
 
 char	*ft_strnstr(const char *s, const char *find, size_t slen)
 {
-	char c;
-    char save_c;
-	size_t len;
+	size_t	flen;
+	int		lastresult;
 
-    c = *find;
-    len = ft_strlen(find);
-	if (c != '\0')
-    {
-        find++;
-		do 
-        {
-			do
-            {
-				if ((save_c = *s++) == '\0' || slen-- < 1)
-                    return (NULL);
-                s++;
-			} while (save_c != c);
-			if (len > slen)
-				return (NULL);
-		} while (ft_strncmp(s, find, len) != 0);
-		s--;
+	if (*find == '\0')
+		return ((char*)s);
+	flen = ft_strlen(find);
+	lastresult = 1;
+	while (flen <= slen && *s != '\0' && lastresult)
+	{
+		lastresult = ft_strncmp(s, find, flen);
+		slen--;
+		s++;
 	}
-	return ((char *)s);
+	if (lastresult != 0)
+		return (NULL);
+	else
+		return ((char *)s);
 }

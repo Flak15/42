@@ -3,9 +3,9 @@
 
 int main(void)
 {
-    char s[] = "";
+    char str[] = "abc";
     char s1[] = "";
-    int res = strcmp(ft_strtrim("\t\t\n\t\t   "), "");
+    int res = strcmp(ft_strsub(str,0 , 0), "");
     // int res = strcmp("", "");
     printf("%d", res);
     // ft_putstr(ft_strtrim("\t\t\n\t\t   "));

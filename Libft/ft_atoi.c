@@ -1,5 +1,5 @@
-
-#include <limits.h>
+#define LONG_MAX 9223372036854775807
+#define LONG_MIN -9223372036854775808
 
 static int ft_isspace(int c)
 {
@@ -12,41 +12,26 @@ int ft_atoi(char *str) {
     int sign;
     unsigned long n;
     unsigned long cutoff;
-    int any;
     int cutlim;
 
     i = 0;
     n = 0;
-    
     while (ft_isspace(str[i]))
         i++;
-    if (str[i] == '-') 
-    {
-		sign = 1;
-		i++;
-    } 
-    else 
-    {
-		sign = 0;
-		if (str[i] == '+')
-			i++;
-	}
+    if (str[i] == '-' || str[i] == '+') 
+		sign = str[i++] == '-' ? 1 : 0;
     while (str[i] >= '0' && str[i] <= '9')
     {
         n = 10 * n + (str[i] - '0');
-        cutoff = sign ? (unsigned long)-(LONG_MIN + LONG_MAX) + LONG_MAX
-	    : LONG_MAX;
+        cutoff = sign ? (unsigned long)LONG_MIN : LONG_MAX;
         cutlim = cutoff % 10;
         if (n > cutoff || (n == cutoff && str[i] > cutlim))
-            any = -1;
+            return (sign ? (int)LONG_MIN : (int)LONG_MAX);
         i++;
     }
-    if (any < 0)
-		n = sign ? LONG_MIN : LONG_MAX;
-    else if (sign)
+ 	if (sign)
 		n = -n;
-
-    return (n);
+    return ((int)n);
 }
 // #include <stdio.h>
 
