@@ -22,6 +22,17 @@ static int count_words(char *str, char delim)
     return (wc); 
 }
 
+static char **ft_clear_all(char **tab)
+{
+	int i;
+
+	i = 0;
+	while (tab[i])
+		free(tab[i++]);
+	free(tab);
+	return (NULL);
+}
+
 char	**ft_strsplit(char const *str, char c)
 {
 	int		strlen;
@@ -39,6 +50,8 @@ char	**ft_strsplit(char const *str, char c)
 		if ((*str == c || *str == '\0') && strlen > 0)
 		{
 			*s++ = ft_strsub(temp_str, 0, strlen);
+			if ((s - 1) == NULL)
+				return (ft_clear_all(save_s));
 			strlen = 0;
 		}
 		strlen = *str == c ? strlen : strlen + 1;

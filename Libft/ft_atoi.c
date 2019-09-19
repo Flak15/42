@@ -7,7 +7,7 @@ static int ft_isspace(int c)
 	    c == '\v' || c == '\f' || c == '\r' || c == ' ' ? 1 : 0);
 }
 
-int ft_atoi(char *str) {
+static long ft_atol(char *str) {
     int i;
     int sign;
     unsigned long n;
@@ -21,28 +21,29 @@ int ft_atoi(char *str) {
         i++;
     if (str[i] == '-' || str[i] == '+') 
 		sign = str[i++] == '-' ? 1 : 0;
+    cutoff = sign ? -(unsigned long)LONG_MIN : LONG_MAX;
+    cutlim = cutoff % 10;
+    cutoff /= 10;
     while (str[i] >= '0' && str[i] <= '9')
     {
         n = 10 * n + (str[i] - '0');
-        cutoff = sign ? (unsigned long)LONG_MIN : LONG_MAX;
-        cutlim = cutoff % 10;
-        if (n > cutoff || (n == cutoff && str[i] > cutlim))
-        {
-            printf("here");
-            return (sign ? (int)LONG_MIN : (int)LONG_MAX);
-        }
-            
+        if (n > cutoff || (n == cutoff && (str[i] - '0') > cutlim))
+            return (sign ? LONG_MIN :  LONG_MAX);   
         i++;
     }
- 	if (sign)
-		n = -n;
-  	return ((int)n);
+	n = sign ? -n : n;
+  	return (n);
+}
+
+int ft_atoi(char *str)
+{
+    return (int)ft_atol(str);
 }
 
 #include <stdlib.h>
 int main(void)
 {
-    printf("%d\n", ft_atoi("19223372036854775809"));
-    printf("%d\n", atoi("19223372036854775809"));
+    printf("%d\n", ft_atoi("-19223372036854775807"));
+    printf("%d\n", atoi("-19223372036854775807"));
     return (0);
 }
