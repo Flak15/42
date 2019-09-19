@@ -1,9 +1,9 @@
 #include "libft.h"
 #include <stdlib.h>
 
-void ft_clear_elem(void *content, size_t content_size)
+static void ft_clear_elem(void *content, size_t content_size)
 {
-	content_size = content_size;
+	(void)content_size;
 	free(content);
 }
 

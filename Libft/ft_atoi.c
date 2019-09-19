@@ -39,11 +39,3 @@ int ft_atoi(char *str)
 {
     return (int)ft_atol(str);
 }
-
-#include <stdlib.h>
-int main(void)
-{
-    printf("%d\n", ft_atoi("-19223372036854775807"));
-    printf("%d\n", atoi("-19223372036854775807"));
-    return (0);
-}
