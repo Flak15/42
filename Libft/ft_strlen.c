@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/20 17:05:38 by nventres          #+#    #+#             */
+/*   Updated: 2019/09/20 17:05:56 by nventres         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-size_t ft_strlen(const char *str)
+size_t	ft_strlen(const char *str)
 {
-    const char *s;
+	const char *s;
 
-    s = str;
-    while (*s)
-        s++;
-    return (s - str);
+	s = str;
+	while (*s)
+		s++;
+	return (s - str);
 }

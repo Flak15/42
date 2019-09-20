@@ -1,9 +1,21 @@
-static int ft_islower(int c)
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/20 17:13:37 by nventres          #+#    #+#             */
+/*   Updated: 2019/09/20 17:13:55 by nventres         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+static int	ft_islower(int c)
 {
-  return (c >= 'a' && c <= 'z');
+	return (c >= 'a' && c <= 'z');
 }
 
-int ft_toupper(int c)
+int			ft_toupper(int c)
 {
-  return (ft_islower(c) ? c - 32 : c);
+	return (ft_islower(c) ? c - 32 : c);
 }

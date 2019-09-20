@@ -1,14 +1,26 @@
-char *ft_strrchr(const char *p, int ch)
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/20 17:10:02 by nventres          #+#    #+#             */
+/*   Updated: 2019/09/20 17:10:34 by nventres         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+char	*ft_strrchr(const char *p, int ch)
 {
 	char *save;
 
 	save = 0;
 	while (1)
-  	{
-		if (*p == (char) ch)
+	{
+		if (*p == (char)ch)
 			save = (char *)p;
 		if (!*p)
-			return(save);
-    ++p;
+			return (save);
+		++p;
 	}
 }

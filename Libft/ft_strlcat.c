@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/20 17:05:28 by nventres          #+#    #+#             */
+/*   Updated: 2019/09/20 17:05:33 by nventres         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-size_t ft_strlcat(char *restrict dest, const char *restrict src, size_t size)
+size_t	ft_strlcat(char *restrict dest, const char *restrict src, size_t size)
 {
-    const char	*savedest;
-	size_t	    n;
+	const char	*savedest;
+	size_t		n;
 	size_t		handled_len;
 
 	savedest = dest;

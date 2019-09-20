@@ -1,28 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strsplit.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/20 17:11:06 by nventres          #+#    #+#             */
+/*   Updated: 2019/09/20 17:41:00 by nventres         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include "libft.h"
 
-static int count_words(char *str, char delim)
+static int	count_words(char *str, char delim)
 {
-    int state; 
-    unsigned wc;
+	int			state;
+	unsigned	wc;
 
-    state = 0;
-    wc = 0;
-    while (*str) 
-    {
-        if (*str == delim) 
-            state = 0;
-        else if (state == 0) 
-        { 
-            state = 1; 
-            ++wc; 
-        }
-        ++str; 
-    } 
-    return (wc); 
+	state = 0;
+	wc = 0;
+	while (*str)
+	{
+		if (*str == delim)
+			state = 0;
+		else if (state == 0)
+		{
+			state = 1;
+			++wc;
+		}
+		++str;
+	}
+	return (wc);
 }
 
-static char **ft_clear_all(char **tab)
+static char	**ft_clear_all(char **tab)
 {
 	int i;
 
@@ -33,7 +45,7 @@ static char **ft_clear_all(char **tab)
 	return (NULL);
 }
 
-char	**ft_strsplit(char const *str, char c)
+char		**ft_strsplit(char const *str, char c)
 {
 	int		strlen;
 	char	*temp_str;

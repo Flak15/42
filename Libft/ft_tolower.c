@@ -1,9 +1,21 @@
-static int ft_isupper(int c)
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/20 17:13:08 by nventres          #+#    #+#             */
+/*   Updated: 2019/09/20 17:13:33 by nventres         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+static int	ft_isupper(int c)
 {
-  return (c >= 'A' && c <= 'Z');
+	return (c >= 'A' && c <= 'Z');
 }
 
-int ft_tolower(int c)
+int			ft_tolower(int c)
 {
-  return (ft_isupper(c) ? c + 32 : c);
+	return (ft_isupper(c) ? c + 32 : c);
 }

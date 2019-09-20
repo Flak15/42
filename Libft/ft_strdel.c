@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strdel.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/20 17:03:23 by nventres          #+#    #+#             */
+/*   Updated: 2019/09/20 17:21:15 by nventres         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-void ft_strdel(char **as)
+void	ft_strdel(char **as)
 {
-    if (!as || !*as)
-        return ;
-
-    ft_memdel((void**)as);
+	if (!as || !*as)
+		return ;
+	ft_memdel((void**)as);
 }
