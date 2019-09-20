@@ -1,12 +1,12 @@
 #include "libft.h"
 #include <stdlib.h>
 
-static size_t		get_num_len(size_t num)
+static size_t		get_numlen(int num)
 {
 	size_t	len;
 
 	len = 0;
-	while (num >= 10)
+	while (num % 10 != num)
 	{
 		num /= 10;
 		++len;
@@ -16,39 +16,25 @@ static size_t		get_num_len(size_t num)
 
 char *ft_itoa(int num)
 {
-    char *buf;
-    char *ptr;
+    char *ns;
+    int i;
+    int sign;
+    long lnum;
 
-    buf = (char *)malloc(get_num_len(num) + 1 + (num < 0 ? 1 : 0));
-    if (!buf)
+    ns = ft_strnew(get_numlen(num) + (num < 0 ? 1 : 0));
+    if (ns == NULL)
         return (NULL);
-    ptr = buf + get_num_len(num) + 1 + (num < 0 ? 1 : 0);
-    *ptr-- = 0;
-    if (num < 0)
+    lnum = (sign = num) < 0 ? -(long)num : num;
+    i = 0;
+    if (lnum == 0)
+        ns[i++] = '0';
+    while  (lnum > 0)
     {
-        while (num != 0) 
-        {
-            *--ptr = '0' - (num % 10);
-            num /= 10;
-        }
-        *--ptr = '-';
-        return (ptr);
+        ns[i++] = lnum % 10 + '0';
+        lnum /= 10;
     }
-    else
-        while (1) 
-        {
-            *--ptr = '0' + (num % 10);
-            num /= 10;
-            if (num == 0)
-                break ;
-        }
-    return (ptr);
+    if (sign < 0)
+        ns[i++] = '-';
+    ns[i] = '\0';
+    return (ft_strrev(ns));
 }
-
-// #include <stdio.h>
-
-// int main(void)
-// {
-//     printf("%s", ft_itoa(-2147483648));
-//     return (0);
-// }
