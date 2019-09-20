@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_clear_tab.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/20 17:03:38 by nventres          #+#    #+#             */
-/*   Updated: 2019/09/20 19:27:18 by nventres         ###   ########.fr       */
+/*   Created: 2019/09/20 18:40:15 by nventres          #+#    #+#             */
+/*   Updated: 2019/09/20 19:25:11 by nventres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *str)
+char	**ft_clear_tab(char **tab)
 {
-	size_t	size;
-	char	*copy;
+	int i;
 
-	size = ft_strlen(str) + 1;
-	copy = (char *)malloc(size);
-	if (!copy)
-		return (NULL);
-	ft_memcpy(copy, str, size);
-	return (copy);
+	i = 0;
+	while (tab[i])
+		free(tab[i++]);
+	free(tab);
+	return (NULL);
 }

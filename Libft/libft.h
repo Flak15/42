@@ -6,13 +6,15 @@
 /*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 17:14:11 by nventres          #+#    #+#             */
-/*   Updated: 2019/09/20 17:17:38 by nventres         ###   ########.fr       */
+/*   Updated: 2019/09/20 19:25:01 by nventres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <string.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 typedef struct		s_list
 {
@@ -83,4 +85,8 @@ void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 char				*ft_strrev(char *s);
+char				**ft_clear_tab(char **tab);
+int					ft_islower(int c);
+int					ft_isupper(int c);
+int					ft_isspace(char c);
 #endif

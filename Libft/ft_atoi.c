@@ -6,18 +6,13 @@
 /*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 16:41:42 by nventres          #+#    #+#             */
-/*   Updated: 2019/09/20 16:47:19 by nventres         ###   ########.fr       */
+/*   Updated: 2019/09/20 19:39:43 by nventres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #define LONG_MAX 9223372036854775807U
 #define LONG_MIN -9223372036854775808U
-
-static int		ft_isspace(int c)
-{
-	return (c == '\t' || c == '\n' ||
-	c == '\v' || c == '\f' || c == '\r' || c == ' ' ? 1 : 0);
-}
 
 static long		ft_atol(const char *str)
 {

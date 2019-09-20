@@ -6,12 +6,11 @@
 /*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 16:52:59 by nventres          #+#    #+#             */
-/*   Updated: 2019/09/20 16:53:15 by nventres         ###   ########.fr       */
+/*   Updated: 2019/09/20 19:25:35 by nventres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
 static void	ft_clear_elem(void *content, size_t content_size)
 {

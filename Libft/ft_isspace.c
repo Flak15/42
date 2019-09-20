@@ -1,26 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/20 17:03:38 by nventres          #+#    #+#             */
-/*   Updated: 2019/09/20 19:27:18 by nventres         ###   ########.fr       */
+/*   Created: 2019/09/20 18:44:01 by nventres          #+#    #+#             */
+/*   Updated: 2019/09/20 18:57:03 by nventres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-char	*ft_strdup(const char *str)
+int	ft_isspace(char c)
 {
-	size_t	size;
-	char	*copy;
-
-	size = ft_strlen(str) + 1;
-	copy = (char *)malloc(size);
-	if (!copy)
-		return (NULL);
-	ft_memcpy(copy, str, size);
-	return (copy);
+	return (c == '\t' || c == '\n' ||
+	c == '\v' || c == '\f' || c == '\r' || c == ' ');
 }

@@ -6,11 +6,11 @@
 /*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 16:57:16 by nventres          #+#    #+#             */
-/*   Updated: 2019/09/20 16:57:33 by nventres         ###   ########.fr       */
+/*   Updated: 2019/09/20 19:25:54 by nventres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 
 void	ft_memdel(void **ap)
 {

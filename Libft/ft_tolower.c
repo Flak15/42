@@ -6,14 +6,11 @@
 /*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 17:13:08 by nventres          #+#    #+#             */
-/*   Updated: 2019/09/20 17:13:33 by nventres         ###   ########.fr       */
+/*   Updated: 2019/09/20 18:50:38 by nventres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static int	ft_isupper(int c)
-{
-	return (c >= 'A' && c <= 'Z');
-}
+#include "libft.h"
 
 int			ft_tolower(int c)
 {

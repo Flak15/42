@@ -6,12 +6,11 @@
 /*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 16:53:20 by nventres          #+#    #+#             */
-/*   Updated: 2019/09/20 16:53:25 by nventres         ###   ########.fr       */
+/*   Updated: 2019/09/20 19:25:38 by nventres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
 t_list	*ft_lstnew(void const *content, size_t content_size)
 {

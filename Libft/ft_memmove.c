@@ -6,13 +6,11 @@
 /*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 16:57:37 by nventres          #+#    #+#             */
-/*   Updated: 2019/09/20 16:58:13 by nventres         ###   ########.fr       */
+/*   Updated: 2019/09/20 19:24:54 by nventres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <unistd.h>
-#include <stdio.h>
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
