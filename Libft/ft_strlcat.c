@@ -1,6 +1,6 @@
 #include "libft.h"
 
-size_t ft_strlcat(char *dest, const char *src, size_t size)
+size_t ft_strlcat(char *restrict dest, const char *restrict src, size_t size)
 {
     const char	*savedest;
 	size_t	    n;

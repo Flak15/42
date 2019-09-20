@@ -1,4 +1,4 @@
-char *ft_strcat(char *str, const char *append)
+char *ft_strcat(char *restrict str, const char *restrict append)
 {
     char *save;
 

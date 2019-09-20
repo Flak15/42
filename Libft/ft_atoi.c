@@ -7,7 +7,7 @@ static int ft_isspace(int c)
 	    c == '\v' || c == '\f' || c == '\r' || c == ' ' ? 1 : 0);
 }
 
-static long ft_atol(char *str) {
+static long ft_atol(const char *str) {
     int i;
     int sign;
     unsigned long n;
@@ -35,7 +35,7 @@ static long ft_atol(char *str) {
   	return (n);
 }
 
-int ft_atoi(char *str)
+int ft_atoi(const char *str)
 {
     return (int)ft_atol(str);
 }
