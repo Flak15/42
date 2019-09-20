@@ -5,7 +5,7 @@ static int ft_isspace(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\n');
 }
-
+#include <stdio.h>
 char *ft_strtrim(char const *s)
 {
 	char *ns;
@@ -20,14 +20,15 @@ char *ft_strtrim(char const *s)
 	end = (char *)s + len - 1;
 	while (ft_isspace(*start))
 		start++;
-	if (!*start)			
-		return (start);
+	// if (!*start)			
+	// 	return (*ns = '\0');
 	while (ft_isspace(*end))
 		end--;
-	ns = (char *)malloc(end - start + 2);
+	len = end - start > 0 ? end - start + 1 : 1;
+	ns = (char *)malloc(len);
 	if (!ns)
 		return (NULL);
-	ft_strncpy(ns, start, end - start + 1);
-	*(ns + (end - start) + 1) = '\0';
+	ft_strncpy(ns, start, len);
+	*(ns + len) = '\0';
 	return (ns);
 }

@@ -40,7 +40,8 @@ char	**ft_strsplit(char const *str, char c)
 	char	**s;
 	char	**save_s;
 
-	temp_str = (char *)str;
+	if (!(temp_str = (char *)str))
+		return (NULL);
 	strlen = 0;
 	s = (char **)malloc((count_words(temp_str, c) + 1) * sizeof(char *));
 	if ((save_s = s) == NULL)
