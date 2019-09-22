@@ -1,18 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_toupper.c                                       :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/20 17:13:37 by nventres          #+#    #+#             */
-/*   Updated: 2019/09/22 13:09:54 by nventres         ###   ########.fr       */
+/*   Created: 2019/09/22 13:16:23 by nventres          #+#    #+#             */
+/*   Updated: 2019/09/22 15:24:49 by nventres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "get_next_line.h"
 #include "libft.h"
 
-int			ft_toupper(int c)
+int get_next_line(const int fd, char **line)
 {
-	return (ft_islower(c) ? c - 32 : c);
+
+	int res;
+	char str[BUFF_SIZE];
+
+	(void)line;
+	while ((res = read(fd, str, BUFF_SIZE)))
+	{
+		str[res] = '\0';
+		ft_putstr(str);
+	}
+	return (0);
+}
+
+#include <stdio.h>
+
+int main(void)
+{
+	int fd;
+	char *s;
+
+	fd = open("test.txt", O_RDONLY);
+	get_next_line(fd, &s);
+	// printf("%s", s);
+	return (0);
 }

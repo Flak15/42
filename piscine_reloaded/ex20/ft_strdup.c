@@ -12,8 +12,6 @@
 
 #include <stdlib.h>
 
-void    *malloc(unsigned long);
-
 int		ft_strlen(char *str)
 {
 	int count;
