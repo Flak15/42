@@ -34,7 +34,7 @@ int get_next_line(const int fd, char **line)
 	{
 		res = read(fd, str, BUFF_SIZE);
 		tmp = (char *)malloc(BUFF_SIZE + 1);
-		line = ft_strjoin()
+		line = ft_strjoin();
 	}
 		
 	if (res == -1)
