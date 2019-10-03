@@ -9,9 +9,9 @@
 /*   Updated: 2019/09/22 15:24:49 by nventres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+#include <stdio.h>//
 #include "get_next_line.h"
-
+#include "libft.h"
 int check_line(char *str)
 {
 	while (*str)
@@ -22,29 +22,32 @@ int check_line(char *str)
 
 int get_next_line(const int fd, char **line)
 {
-
+	static char *file = "";
 	int res;
 	char str[BUFF_SIZE + 1];
-	char *tmp;
-	
+	// char *tmp;
+
 	if (fd < 0 || line == NULL)
 		return (-1);
-
+	// tmp = (char *)malloc(BUFF_SIZE + 1);
 	while (res != 0)
 	{
 		res = read(fd, str, BUFF_SIZE);
-		tmp = (char *)malloc(BUFF_SIZE + 1);
-		line = ft_strjoin();
+
+		file = ft_strjoin(file, str);
+		if (ft_strchr(file, '\n'))
+			break ;
 	}
-		
+
+	*line = file;
 	if (res == -1)
 		return (-1);
 
-	*line = str;
+
 	return (res < BUFF_SIZE ? 0 : 1);
 }
 
-#include <stdio.h>
+
 
 int main(void)
 {
@@ -53,11 +56,8 @@ int main(void)
 	int res;
 
 	fd = open("test.txt", O_RDONLY);
-	while (res > 0)
-	{
-		res = get_next_line(fd, &s);
-		
-	}
+
+ 	get_next_line(fd, &s);
 	printf("%s", s);
 	return (0);
 }
