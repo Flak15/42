@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/22 15:05:14 by nventres          #+#    #+#             */
-/*   Updated: 2019/09/22 15:20:42 by nventres         ###   ########.fr       */
+/*   Created: 2019/09/20 16:57:37 by nventres          #+#    #+#             */
+/*   Updated: 2019/09/20 19:24:54 by nventres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H	
-# define BUFF_SIZE 10
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <limits.h>
-# include "libft.h"
+#include "libft.h"
 
-typedef struct		s_file
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	int fd;
-	char *text;
-}					t_file;
-int get_next_line(const int fd, char **line);
-#endif
+	char *d;
+	char *s;
+	char *lasts;
+	char *lastd;
+
+	if (!dst && !src)
+		return (NULL);
+	d = (char *)dst;
+	s = (char *)src;
+	lasts = s + (len - 1);
+	lastd = d + (len - 1);
+	if (d < s)
+	{
+		while (len--)
+			*d++ = *s++;
+	}
+	else
+		while (len--)
+			*lastd-- = *lasts--;
+	return (dst);
+}

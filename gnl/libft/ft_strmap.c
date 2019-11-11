@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/22 15:05:14 by nventres          #+#    #+#             */
-/*   Updated: 2019/09/22 15:20:42 by nventres         ###   ########.fr       */
+/*   Created: 2019/09/20 17:06:00 by nventres          #+#    #+#             */
+/*   Updated: 2019/09/20 19:27:33 by nventres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H	
-# define BUFF_SIZE 10
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <limits.h>
-# include "libft.h"
+#include "libft.h"
 
-typedef struct		s_file
+char	*ft_strmap(char const *s, char (*f)(char))
 {
-	int fd;
-	char *text;
-}					t_file;
-int get_next_line(const int fd, char **line);
-#endif
+	size_t	len;
+	char	*ns;
+	char	*save_ns;
+
+	if (!s || !f)
+		return (NULL);
+	len = ft_strlen(s);
+	ns = (char *)malloc(len + 1);
+	if (!ns)
+		return (NULL);
+	save_ns = ns;
+	while (*s)
+	{
+		*ns = f(*s++);
+		ns++;
+	}
+	*ns = '\0';
+	return (save_ns);
+}

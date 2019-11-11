@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strrev.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/22 15:05:14 by nventres          #+#    #+#             */
-/*   Updated: 2019/09/22 15:20:42 by nventres         ###   ########.fr       */
+/*   Created: 2019/09/20 17:10:37 by nventres          #+#    #+#             */
+/*   Updated: 2019/09/20 17:10:55 by nventres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H	
-# define BUFF_SIZE 10
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <limits.h>
-# include "libft.h"
+#include "libft.h"
 
-typedef struct		s_file
+char	*ft_strrev(char *s)
 {
-	int fd;
-	char *text;
-}					t_file;
-int get_next_line(const int fd, char **line);
-#endif
+	int		i;
+	int		j;
+	char	c;
+
+	if (!s || !*s)
+		return (s);
+	i = 0;
+	j = ft_strlen(s) - 1;
+	while (i < j)
+	{
+		c = s[i];
+		s[i] = s[j];
+		s[j] = c;
+		i++;
+		j--;
+	}
+	return (s);
+}

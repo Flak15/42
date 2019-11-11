@@ -1,28 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/22 15:05:14 by nventres          #+#    #+#             */
-/*   Updated: 2019/09/22 15:20:42 by nventres         ###   ########.fr       */
+/*   Created: 2019/09/20 17:11:39 by nventres          #+#    #+#             */
+/*   Updated: 2019/09/20 17:11:53 by nventres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H	
-# define BUFF_SIZE 10
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <limits.h>
-# include "libft.h"
+#include "libft.h"
 
-typedef struct		s_file
+char	*ft_strstr(const char *str, const char *to_find)
 {
-	int fd;
-	char *text;
-}					t_file;
-int get_next_line(const int fd, char **line);
-#endif
+	char *s;
+	char *f;
+
+	if (!*to_find)
+		return ((char *)str);
+	while (*str)
+	{
+		s = (char *)str;
+		f = (char *)to_find;
+		while (*s && *f && !(*f - *s))
+		{
+			s++;
+			f++;
+		}
+		if (!*f)
+			return ((char *)str);
+		str++;
+	}
+	return (NULL);
+}
