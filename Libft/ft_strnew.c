@@ -16,7 +16,7 @@ char	*ft_strnew(size_t size)
 {
 	void	*str;
 
-	if (size == SIZE_MAX)
+	if (size == __SIZE_MAX__)
 		return (NULL);
 	str = malloc(size + 1);
 	if (!str)
