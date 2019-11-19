@@ -89,5 +89,5 @@ char				**ft_clear_tab(char **tab);
 int					ft_islower(int c);
 int					ft_isupper(int c);
 int					ft_isspace(char c);
-char				*ft_strjoinall(char const **s);
+char				*ft_strrmchr(const char *s, char c);
 #endif
