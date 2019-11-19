@@ -11,18 +11,13 @@
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H	
-# define BUFF_SIZE 10
+# define GET_NEXT_LINE_H
+# define BUFF_SIZE 8
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
 # include "libft.h"
 
-typedef struct		s_file
-{
-	int fd;
-	char *text;
-}					t_file;
 int get_next_line(const int fd, char **line);
 #endif
