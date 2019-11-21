@@ -3,6 +3,11 @@
 #include <stdio.h>
 #include <fcntl.h>
 
+
+int check_right(unsigned short tet, int i);
+int check_left(unsigned short tet, int i);
+int check_bottom(unsigned short tet, int i);
+
 int ft_pow(int base, int n)
 {
 	int p;
@@ -67,8 +72,6 @@ int check_input(char *str)
 			printf("unknown symbol\n");
 			return (1);
 		}
-			
-		// printf("%c", *str);
 		str++;
 	}
 	return (0);
@@ -97,17 +100,62 @@ short *parse_tet(char *tet_str)
 	return (tets);
 }
 
-int check_tet(unsigned short *tets, int i)
+int check_right(unsigned short tet, int i)
 {
-
-	if (i <= 0 || i > 15)
+	if (i < 0)
 		return (0);
-	if (tets[0] & 1 << i)
-		return (1 + check_tet(&tets[0], i - 1) + check_tet(&tets[0], i + 1) + check_tet(&tets[0], i - 4));
+	if (tet & 1 << i)
+		return (1 + check_bottom(tet, i - 4) + (i % 4 == 0 ? 0 : check_right(tet, i - 1)) );
 	else
-		check_tet(tets, --i);
-	
-	
+		return (0);
+}
+
+int check_left(unsigned short tet, int i)
+{
+	if (i > 15 )
+		return (0);
+	if (tet & 1 << i)
+		return (1 + ((i + 1) % 4 == 0 ? 0 : check_left(tet, i + 1)) + check_bottom(tet, i - 4));
+	else
+		return (0);
+}
+
+int check_bottom(unsigned short tet, int i)
+{
+	if (i < 0)
+		return (0);
+	if (tet & 1 << i)
+		return (1 + ((i + 1) % 4 == 0 ? 0 : check_left(tet, i + 1)) + check_bottom(tet, i - 4) + (i % 4 == 0 ? 0 : check_right(tet, i - 1)) );
+	else
+		return (0);
+}
+
+int check_tet(unsigned short *tets)
+{
+	int i = 15;
+	int j = 0;
+	int res;
+
+	while (tets[j])
+	{
+		printf("tet %d\n", tets[j]);
+		while (!(tets[j] & 1 << i))
+			i--;
+		res = 1 + check_right(tets[j], i - 1) + check_bottom(tets[j], i - 4);
+		printf("res: %d\n", res);
+		if (res == 6)
+		{
+			if (tets[j] != 51 && tets[j] != 51 << 1 && tets[j] != 51 << 2 &&
+				tets[j] != 51 << 4 && tets[j] != 51 << 5 && tets[j] != 51 << 6
+				&& tets[j] != 51 << 8 && tets[j] != 51 << 9 && tets[j] != 51 << 10)
+				return (1);
+		}
+		else if (res != 4 )
+			return (1);
+		j++;
+		i = 15;
+	}
+	return (0);
 }
 
 void render(unsigned short *tets)
@@ -131,6 +179,7 @@ void render(unsigned short *tets)
 		tets++;
 		i = 15;
 	}
+	printf("\n");
 }
 
 
@@ -141,7 +190,7 @@ int main(void)
 	char *tet;
 	int res;
 	unsigned short *tets_arr;
-	unsigned short test = 61440;
+	unsigned short test = 1728;
 	fd = 10;
 
 	fd = open("test.txt", O_RDONLY, 0);
@@ -152,7 +201,9 @@ int main(void)
 	// printf("res %d\n", tets_arr[1]);
 	// printf("res %d\n", tets_arr[2]);
 	// printf("res %d\n", tets_arr[3]);
-	// render(&test);
-	check_tet(&test, 15);
+	render(tets_arr);
+	printf("checker: %d\n", check_tet(tets_arr));
+	// check_tet(&test);
+	//printf("res %d\n", res);
 	return (0);
 }
