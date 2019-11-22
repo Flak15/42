@@ -158,6 +158,35 @@ int check_tet(unsigned short *tets)
 	return (0);
 }
 
+void shift_tet(unsigned short *tets)
+{
+	int i;
+	int j;
+
+	i = 15;
+	unsigned short shifted;
+
+	shifted = tets[2];
+	while (!(tets[2] & 1 << i))
+		i--;
+	while (i < 12)
+	{
+		tets[2] = tets[2] << 4;
+		i += 4;
+	}
+	i = 15;
+	j = 15;
+
+	while (j > 12)
+	{
+		while (i > 4)
+		{
+			if (!(tets[2] & 1 << i))
+		}
+	}
+	printf("shifted: %d\n", tets[2]);
+}
+
 void render(unsigned short *tets)
 {
 	int i;
@@ -203,6 +232,7 @@ int main(void)
 	// printf("res %d\n", tets_arr[3]);
 	render(tets_arr);
 	printf("checker: %d\n", check_tet(tets_arr));
+	shift_tet(tets_arr);
 	// check_tet(&test);
 	//printf("res %d\n", res);
 	return (0);
