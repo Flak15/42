@@ -7,6 +7,7 @@
 int check_right(unsigned short tet, int i);
 int check_left(unsigned short tet, int i);
 int check_bottom(unsigned short tet, int i);
+void render(unsigned short *tets);
 
 int ft_pow(int base, int n)
 {
@@ -158,33 +159,79 @@ int check_tet(unsigned short *tets)
 	return (0);
 }
 
-void shift_tet(unsigned short *tets)
+void shift_top_tet(unsigned short *tets)
 {
 	int i;
 	int j;
 
 	i = 15;
-	unsigned short shifted;
-
-	shifted = tets[2];
-	while (!(tets[2] & 1 << i))
+	while (!(*tets & 1 << i))
 		i--;
 	while (i < 12)
 	{
-		tets[2] = tets[2] << 4;
+		*tets = *tets << 4;
 		i += 4;
 	}
-	i = 15;
-	j = 15;
+}
 
-	while (j > 12)
+void shift_left_tet(unsigned short *tets)
+{
+	int i;
+	int j;
+
+	j = 15;
+	while (j >= 12)
 	{
-		while (i > 4)
+		i = j;
+		while (i > 0)
 		{
-			if (!(tets[2] & 1 << i))
+			if (*tets & (1 << i))
+			{
+				while ((i + 1) % 4 != 0)
+				{
+					*tets = *tets << 1;
+					i++;
+				}
+				return ;
+			}
+			i -= 4;
 		}
+		j--;
 	}
-	printf("shifted: %d\n", tets[2]);
+}
+
+void shift_tets(unsigned short *tets)
+{
+	while (*tets)
+	{
+		shift_top_tet(tets);
+		shift_left_tet(tets);
+		tets++;
+	}
+}
+
+int get_fig_length(unsigned short tet)
+{
+	if (tet & 4096)
+		return (4);
+	else if ((tet & 512) || (tet & 32))
+		return (3);
+	else if (tet & 8)
+		return (1);
+	else
+		return (2);
+}
+
+int get_fig_height(unsigned short tet)
+{
+	if (tet & 8)
+		return (4);
+	else if ((tet & 128) || (tet & 64))
+		return (3);
+	else if (tet & 4096)
+		return (1);
+	else
+		return (2);
 }
 
 void render(unsigned short *tets)
@@ -211,8 +258,6 @@ void render(unsigned short *tets)
 	printf("\n");
 }
 
-
-
 int main(void)
 {
 	int fd;
@@ -222,7 +267,7 @@ int main(void)
 	unsigned short test = 1728;
 	fd = 10;
 
-	fd = open("test.txt", O_RDONLY, 0);
+	fd = open("t.txt", O_RDONLY, 0);
 	tet = read_tet(fd);
 	res = check_input(tet);
 	tets_arr = parse_tet(tet);
@@ -230,10 +275,12 @@ int main(void)
 	// printf("res %d\n", tets_arr[1]);
 	// printf("res %d\n", tets_arr[2]);
 	// printf("res %d\n", tets_arr[3]);
+	
+	//printf("checker: %d\n", check_tet(tets_arr));
+	check_tet(&test);
+	shift_tets(tets_arr);
 	render(tets_arr);
-	printf("checker: %d\n", check_tet(tets_arr));
-	shift_tet(tets_arr);
-	// check_tet(&test);
+	// 
 	//printf("res %d\n", res);
 	return (0);
 }
