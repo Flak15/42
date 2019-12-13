@@ -7,9 +7,10 @@
 int check_right(unsigned short tet, int i);
 int check_left(unsigned short tet, int i);
 int check_bottom(unsigned short tet, int i);
-void render(unsigned short *tets);
+void render_f(unsigned long *tets, int i);
+unsigned long proccess(unsigned long *field, unsigned long *tets, int index, int f_size);
 
-int ft_pow(int base, int n)
+static int ft_pow(int base, int n)
 {
 	int p;
 
@@ -37,7 +38,6 @@ char *read_tet(int fd)
 		tet = ft_strjoin(tet, tmp);
 		free(ftet);
 	}
-	
 	return (tet);
 }
 
@@ -139,11 +139,9 @@ int check_tet(unsigned short *tets)
 
 	while (tets[j])
 	{
-		printf("tet %d\n", tets[j]);
 		while (!(tets[j] & 1 << i))
 			i--;
 		res = 1 + check_right(tets[j], i - 1) + check_bottom(tets[j], i - 4);
-		printf("res: %d\n", res);
 		if (res == 6)
 		{
 			if (tets[j] != 51 && tets[j] != 51 << 1 && tets[j] != 51 << 2 &&
@@ -210,52 +208,160 @@ void shift_tets(unsigned short *tets)
 	}
 }
 
-int get_fig_length(unsigned short tet)
+unsigned long convert(unsigned short tet)
 {
-	if (tet & 4096)
-		return (4);
-	else if ((tet & 512) || (tet & 32))
-		return (3);
-	else if (tet & 8)
-		return (1);
-	else
-		return (2);
+	unsigned long res;
+
+	res = 0;
+	res = res | ((unsigned long)(tet & 0xF000) << 48);
+	res = res | ((unsigned long)(tet & 0x0F00) << 44);
+	res = res | ((unsigned long)(tet & 0x00F0) << 40);
+	res = res | ((unsigned long)(tet & 0x000F) << 36);
+	return res;
 }
 
-int get_fig_height(unsigned short tet)
+unsigned long *convert_all(unsigned short *tets)
 {
-	if (tet & 8)
-		return (4);
-	else if ((tet & 128) || (tet & 64))
-		return (3);
-	else if (tet & 4096)
-		return (1);
-	else
-		return (2);
-}
+	int cnt;
+	unsigned long *res;
 
-void render(unsigned short *tets)
-{
-	int i;
-
-	i = 15;	 
+	cnt = 0;
+	while (tets[cnt])
+		cnt++;
+	res = (unsigned long *)malloc(sizeof(unsigned long) * (cnt + 1));
+	res[cnt] = 0;
 	while (*tets)
 	{
-		while (i >= 0)
-		{
-			if ((i + 1) % 4  == 0)
-				printf("\n");
-			if ((i + 1) % 16  == 0)
-				printf("\n");
-			if (*tets & 1 << i--)
-				printf("#");
-			else
-				printf(".");
-		}
+		*res = convert(*tets);
+		res++;
 		tets++;
-		i = 15;
+	}
+	// free(tets);
+	return (res - cnt);
+}
+
+int get_lfig_length(unsigned long tet)
+{
+	if (tet & 0x1000000000000000)
+		return (4);
+	else if ((tet & 0x2000000000000000) 
+		|| (tet &   0x20000000000000))
+		return (3);
+	else if (tet & 0x8000000000)
+		return (1);
+	else
+		return (2);
+}
+
+int get_lfig_height(unsigned long tet)
+{
+	if (tet & 0x8000000000)
+		return (4);
+	else if ((tet & 0x800000000000) 
+		|| (tet & 0x400000000000))
+		return (3);
+	else if (tet & 0x1000000000000000)
+		return (1);
+	else
+		return (2);
+}
+
+unsigned long proccess(unsigned long *field, unsigned long *tets, int index, int f_size)
+{
+	unsigned long l_tet;
+	unsigned long res;
+	int h_shift;
+	int v_shift;
+	int cnt;
+
+	cnt = 0;
+	h_shift = 1;
+	v_shift = 1;
+	l_tet = (tets[index]);
+	if (l_tet == 0)
+		return (*field);
+	while (1)
+	{
+		while ((*field | l_tet) != (*field + l_tet) || (cnt != 0))
+		{
+			l_tet = l_tet >> 1;
+			if (h_shift + get_lfig_length(tets[index]) > f_size)
+			{
+				l_tet = l_tet >> (8 - h_shift);
+				h_shift = 1;
+				v_shift++;
+			}
+			else
+				h_shift++;
+			if (get_lfig_height(tets[index]) + (v_shift) > f_size + 1)
+				return (1);
+			cnt = cnt == 0 ? 0 : cnt - 1;
+		}
+		*field = *field | l_tet;
+		if ((res = proccess(field, tets, index + 1, f_size)) == 1)
+		{
+			*field = *field ^ l_tet;
+			cnt++;
+		}
+		else
+		{
+			tets[index] = l_tet;
+			break;
+		}
+	}
+	
+	return (res);
+}	
+
+void render_f(unsigned long *tets, int f_size)
+{
+	int i;
+	int tet;
+	int printed;
+	
+	i = 63;	 
+	while (i >= 0)
+	{
+		tet = 0;
+		printed = 0;
+		if ((i + 1) % 8 == 0)
+			printf("\n");
+		while (tets[tet])
+		{
+			if (tets[tet] & ((unsigned long)1 << (i)))
+			{
+				printf("%c", 'A' + tet);
+				printed = 1;
+				break;
+			}
+				
+			tet++;
+		}
+		if (!printed && (i % 8 >= 8 - f_size) && (i / 8 >= 8 - f_size))
+			printf(".");
+		i--;
 	}
 	printf("\n");
+}
+
+void get_solution(unsigned long *tets)
+{
+	unsigned long f = 0;
+	int i;
+
+	i = 2;
+	while (i <= 8)
+	{
+		f = proccess(&f, tets, 0, i);
+		if (f != 1)
+			break;
+		i++;
+	}
+	if (i > 8)
+		printf("err");
+	else
+		render_f(tets, i);
+	
 }
 
 int main(void)
@@ -264,23 +370,17 @@ int main(void)
 	char *tet;
 	int res;
 	unsigned short *tets_arr;
-	unsigned short test = 1728;
-	fd = 10;
 
-	fd = open("t.txt", O_RDONLY, 0);
+	fd = open("test1.txt", O_RDONLY, 0);
 	tet = read_tet(fd);
-	res = check_input(tet);
+	if (check_input(tet))
+	{
+		printf("err validate");
+		return (1);
+	}
 	tets_arr = parse_tet(tet);
-	// printf("res %d\n", tets_arr[0]);
-	// printf("res %d\n", tets_arr[1]);
-	// printf("res %d\n", tets_arr[2]);
-	// printf("res %d\n", tets_arr[3]);
-	
-	//printf("checker: %d\n", check_tet(tets_arr));
-	check_tet(&test);
+	check_tet(tets_arr);
 	shift_tets(tets_arr);
-	render(tets_arr);
-	// 
-	//printf("res %d\n", res);
+	get_solution(convert_all(tets_arr));
 	return (0);
 }
