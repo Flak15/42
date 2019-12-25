@@ -118,7 +118,7 @@ int			check_bottom(unsigned short tet, int i)
 		return (0);
 }
 
-int			check_tet(unsigned short *tets)
+int			check_tet(unsigned short *tets, char *tet_str)
 {
 	int i;
 	int j;
@@ -144,6 +144,8 @@ int			check_tet(unsigned short *tets)
 		j++;
 		i = 15;
 	}
+	if (j < (int)(ft_strlen(tet_str) / 4))
+		return (1);
 	return (0);
 }
 
@@ -337,7 +339,8 @@ void		get_solution(unsigned long *tets)
 	int				i;
 
 	f = 0;
-	i = 2;
+	i = get_lfig_length(tets[0]) > get_lfig_height(tets[0]) ?
+		get_lfig_length(tets[0]) : get_lfig_height(tets[0]);
 	while (i <= 8)
 	{
 		f = proccess(&f, tets, 0, i);
@@ -358,7 +361,10 @@ int			main(int argc, char **argv)
 	unsigned short	*tets_arr;
 
 	if (argc != 2)
+	{
+		ft_putstr("usage: ./fillit <file>\n");
 		return (1);
+	}
 	fd = open(argv[1], O_RDONLY, 0);
 	tet = read_tet(fd);
 	if (check_input(tet))
@@ -367,7 +373,7 @@ int			main(int argc, char **argv)
 		return (1);
 	}
 	tets_arr = parse_tet(tet);
-	if (check_tet(tets_arr))
+	if (check_tet(tets_arr, tet))
 	{
 		ft_putstr("error\n");
 		return (1);
