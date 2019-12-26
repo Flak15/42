@@ -257,11 +257,24 @@ int				get_lfig_height(unsigned long tet)
 		return (2);
 }
 
+unsigned long make_shift(unsigned long l_tet, int *h_shift, int *v_shift)
+{
+		l_tet = l_tet >> (8 - *h_shift);
+		*h_shift = 1;
+		(*v_shift)++;
+		return (l_tet);
+}
+
+void rm_tet(unsigned long *field, int *cnt, unsigned long	l_tet)
+{
+	*field = *field ^ l_tet;
+	(*cnt)++;
+}
+
 unsigned long	proccess(unsigned long *field, unsigned long *tets,
 	int index, int f_size)
 {
 	unsigned long	l_tet;
-	unsigned long	res;
 	int				h_shift;
 	int				v_shift;
 	int				cnt;
@@ -269,20 +282,15 @@ unsigned long	proccess(unsigned long *field, unsigned long *tets,
 	cnt = 0;
 	h_shift = 1;
 	v_shift = 1;
-	l_tet = (tets[index]);
-	if (l_tet == 0)
-		return (*field);
+	if ((l_tet = tets[index]) == 0)
+		return (0);
 	while (1)
 	{
 		while ((*field | l_tet) != (*field + l_tet) || (cnt != 0))
 		{
 			l_tet = l_tet >> 1;
 			if (h_shift + get_lfig_length(tets[index]) > f_size)
-			{
-				l_tet = l_tet >> (8 - h_shift);
-				h_shift = 1;
-				v_shift++;
-			}
+				l_tet = make_shift(l_tet, &h_shift, &v_shift);
 			else
 				h_shift++;
 			if (get_lfig_height(tets[index]) + (v_shift) > f_size + 1)
@@ -290,18 +298,14 @@ unsigned long	proccess(unsigned long *field, unsigned long *tets,
 			cnt = cnt == 0 ? 0 : cnt - 1;
 		}
 		*field = *field | l_tet;
-		if ((res = proccess(field, tets, index + 1, f_size)) == 1)
-		{
-			*field = *field ^ l_tet;
-			cnt++;
-		}
+		if (proccess(field, tets, index + 1, f_size) == 1)
+			rm_tet(field, &cnt, l_tet);
 		else
 		{
 			tets[index] = l_tet;
-			break ;
+			return (0);
 		}
 	}
-	return (res);
 }
 
 void		render_f(unsigned long *tets, int f_size)
