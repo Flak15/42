@@ -1,4 +1,5 @@
 #define BUFF_SIZE 8
+#define ERR_EXT 
 char			*read_tet(int fd);
 int				check_right(unsigned short tet, int i);
 int				check_left(unsigned short tet, int i);

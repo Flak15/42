@@ -6,7 +6,7 @@
 /*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/25 14:01:06 by nventres          #+#    #+#             */
-/*   Updated: 2019/12/26 18:23:30 by nventres         ###   ########.fr       */
+/*   Updated: 2019/12/26 18:53:55 by nventres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,19 +131,18 @@ int			check_tet(unsigned short *tets, char *tet_str)
 			i--;
 		res = 1 + check_right(tets[j], i - 1) + check_bottom(tets[j], i - 4);
 		if (res == 6)
-		{
 			if (tets[j] != 51 && tets[j] != 51 << 1 && tets[j] != 51 << 2 &&
 			tets[j] != 51 << 4 && tets[j] != 51 << 5 && tets[j] != 51 << 6 &&
 			tets[j] != 51 << 8 && tets[j] != 51 << 9 && tets[j] != 51 << 10)
 				return (1);
-		}
-		else if (res != 4)
+		if (res != 4 && res != 6)
 			return (1);
 		j++;
 		i = 15;
 	}
 	if (j < (int)(ft_strlen(ft_strrmchr(tet_str, '\n')) / 16))
 		return (1);
+	free(tet_str);
 	return (0);
 }
 
@@ -358,7 +357,7 @@ void		get_solution(unsigned long *tets)
 		i++;
 	}
 	if (i > 8)
-		ft_putstr("error3\n");
+		ft_putstr("error\n");
 	else
 		render_f(tets, i);
 }
@@ -376,22 +375,15 @@ int			main(int argc, char **argv)
 	}
 	if ((fd = open(argv[1], O_RDONLY, 0)) == -1)
 	{
-		ft_putstr("error0\n");
+		ft_putstr("error\n");
 		return (1);
 	}
-	tet = read_tet(fd);
-	if (check_input(tet))
+	if (check_input(tet = read_tet(fd)) ||
+	check_tet(tets_arr = parse_tet(tet), tet))
 	{
-		ft_putstr("error1\n");
+		ft_putstr("error\n");
 		return (1);
 	}
-	tets_arr = parse_tet(tet);
-	if (check_tet(tets_arr, tet))
-	{
-		ft_putstr("error2\n");
-		return (1);
-	}
-	free(tet);
 	shift_tets(tets_arr);
 	get_solution(convert_all(tets_arr));
 	return (0);
