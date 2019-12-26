@@ -6,7 +6,7 @@
 /*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/25 14:01:06 by nventres          #+#    #+#             */
-/*   Updated: 2019/12/25 14:30:46 by nventres         ###   ########.fr       */
+/*   Updated: 2019/12/26 18:23:30 by nventres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ unsigned short		*parse_tet(char *tet_str)
 
 	tmp = tet_str;
 	tet_str = ft_strrmchr(tet_str, '\n');
-	free(tmp);
 	tets_len = ft_strlen(tet_str) / 4;
 	tets = (unsigned short *)ft_memalloc(sizeof(short) * (tets_len) + 1);
 	tets[tets_len] = 0;
@@ -134,9 +133,8 @@ int			check_tet(unsigned short *tets, char *tet_str)
 		if (res == 6)
 		{
 			if (tets[j] != 51 && tets[j] != 51 << 1 && tets[j] != 51 << 2 &&
-				tets[j] != 51 << 4 && tets[j] != 51 << 5 &&
-				tets[j] != 51 << 6 && tets[j] != 51 << 8 &&
-				tets[j] != 51 << 9 && tets[j] != 51 << 10)
+			tets[j] != 51 << 4 && tets[j] != 51 << 5 && tets[j] != 51 << 6 &&
+			tets[j] != 51 << 8 && tets[j] != 51 << 9 && tets[j] != 51 << 10)
 				return (1);
 		}
 		else if (res != 4)
@@ -144,9 +142,8 @@ int			check_tet(unsigned short *tets, char *tet_str)
 		j++;
 		i = 15;
 	}
-	if (j < (int)(ft_strlen(tet_str) / 4))
-		ft_putstr("warn\n");
-		//return (1);
+	if (j < (int)(ft_strlen(ft_strrmchr(tet_str, '\n')) / 16))
+		return (1);
 	return (0);
 }
 
@@ -258,30 +255,31 @@ int				get_lfig_height(unsigned long tet)
 		return (2);
 }
 
-unsigned long make_shift(unsigned long l_tet, int *h_shift, int *v_shift)
+unsigned long	make_shift(unsigned long l_tet, int *h_shift, int *v_shift)
 {
-		l_tet = l_tet >> (8 - *h_shift);
-		*h_shift = 1;
-		(*v_shift)++;
-		return (l_tet);
+	l_tet = l_tet >> (8 - *h_shift);
+	*h_shift = 1;
+	(*v_shift)++;
+	return (l_tet);
 }
 
-void rm_tet(unsigned long *field, int *cnt, unsigned long	l_tet)
+void	rm_tet(unsigned long *field, int *cnt, unsigned long l_tet)
 {
 	*field = *field ^ l_tet;
 	(*cnt)++;
 }
 
-int get_pos(unsigned long *field, unsigned long *l_tet, int *sizes[4], unsigned long tet)
+int	get_tet_pos(unsigned long *field, unsigned long *l_tet, int *sizes,
+	unsigned long tet)
 {
-	while ((*field | l_tet) != (*field + l_tet) || (sizes[3] != 0))
+	while ((*field | *l_tet) != (*field + *l_tet) || (sizes[3] != 0))
 	{
 		*l_tet = *l_tet >> 1;
-		if (sizes[0] + get_lfig_length(tets[index]) > sizes[2])
+		if (sizes[0] + get_lfig_length(tet) > sizes[2])
 			*l_tet = make_shift(*l_tet, &sizes[0], &sizes[1]);
 		else
-			sizes[0]++;
-		if (get_lfig_height(tets[index]) + (sizes[1]) > sizes[2] + 1)
+			(sizes[0])++;
+		if (get_lfig_height(tet) + (sizes[1]) > sizes[2] + 1)
 			return (1);
 		sizes[3] = sizes[3] == 0 ? 0 : sizes[3] - 1;
 	}
@@ -292,34 +290,17 @@ unsigned long	proccess(unsigned long *field, unsigned long *tets,
 	int index, int f_size)
 {
 	unsigned long	l_tet;
-	// int				h_shift;
-	// int				v_shift;
-	int				cnt;
+	int				sizes[4];
 
-	int sizes[4];
 	sizes[0] = 1;
 	sizes[1] = 1;
 	sizes[2] = f_size;
 	sizes[3] = 0;
-	cnt = 0;
-	// h_shift = 1;
-	// v_shift = 1;
 	if ((l_tet = tets[index]) == 0)
 		return (0);
 	while (1)
 	{
-		// while ((*field | l_tet) != (*field + l_tet) || (sizes[3] != 0))
-		// {
-		// 	l_tet = l_tet >> 1;
-		// 	if (sizes[0] + get_lfig_length(tets[index]) > sizes[2])
-		// 		l_tet = make_shift(l_tet, &sizes[0], &sizes[1]);
-		// 	else
-		// 		sizes[0]++;
-		// 	if (get_lfig_height(tets[index]) + (sizes[1]) > sizes[2] + 1)
-		// 		return (1);
-		// 	sizes[3] = sizes[3] == 0 ? 0 : sizes[3] - 1;
-		// }
-		if (get_pos(field, &l_tet, &sizes, tets[index]) == 1)
+		if (get_tet_pos(field, &l_tet, sizes, tets[index]) == 1)
 			return (1);
 		*field = *field | l_tet;
 		if (proccess(field, tets, index + 1, f_size) == 1)
@@ -393,7 +374,11 @@ int			main(int argc, char **argv)
 		ft_putstr("usage: ./fillit <file>\n");
 		return (1);
 	}
-	fd = open(argv[1], O_RDONLY, 0);
+	if ((fd = open(argv[1], O_RDONLY, 0)) == -1)
+	{
+		ft_putstr("error0\n");
+		return (1);
+	}
 	tet = read_tet(fd);
 	if (check_input(tet))
 	{
@@ -406,6 +391,7 @@ int			main(int argc, char **argv)
 		ft_putstr("error2\n");
 		return (1);
 	}
+	free(tet);
 	shift_tets(tets_arr);
 	get_solution(convert_all(tets_arr));
 	return (0);
