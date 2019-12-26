@@ -145,7 +145,8 @@ int			check_tet(unsigned short *tets, char *tet_str)
 		i = 15;
 	}
 	if (j < (int)(ft_strlen(tet_str) / 4))
-		return (1);
+		ft_putstr("warn\n");
+		//return (1);
 	return (0);
 }
 
@@ -271,35 +272,58 @@ void rm_tet(unsigned long *field, int *cnt, unsigned long	l_tet)
 	(*cnt)++;
 }
 
+int get_pos(unsigned long *field, unsigned long *l_tet, int *sizes[4], unsigned long tet)
+{
+	while ((*field | l_tet) != (*field + l_tet) || (sizes[3] != 0))
+	{
+		*l_tet = *l_tet >> 1;
+		if (sizes[0] + get_lfig_length(tets[index]) > sizes[2])
+			*l_tet = make_shift(*l_tet, &sizes[0], &sizes[1]);
+		else
+			sizes[0]++;
+		if (get_lfig_height(tets[index]) + (sizes[1]) > sizes[2] + 1)
+			return (1);
+		sizes[3] = sizes[3] == 0 ? 0 : sizes[3] - 1;
+	}
+	return (0);
+}
+
 unsigned long	proccess(unsigned long *field, unsigned long *tets,
 	int index, int f_size)
 {
 	unsigned long	l_tet;
-	int				h_shift;
-	int				v_shift;
+	// int				h_shift;
+	// int				v_shift;
 	int				cnt;
 
+	int sizes[4];
+	sizes[0] = 1;
+	sizes[1] = 1;
+	sizes[2] = f_size;
+	sizes[3] = 0;
 	cnt = 0;
-	h_shift = 1;
-	v_shift = 1;
+	// h_shift = 1;
+	// v_shift = 1;
 	if ((l_tet = tets[index]) == 0)
 		return (0);
 	while (1)
 	{
-		while ((*field | l_tet) != (*field + l_tet) || (cnt != 0))
-		{
-			l_tet = l_tet >> 1;
-			if (h_shift + get_lfig_length(tets[index]) > f_size)
-				l_tet = make_shift(l_tet, &h_shift, &v_shift);
-			else
-				h_shift++;
-			if (get_lfig_height(tets[index]) + (v_shift) > f_size + 1)
-				return (1);
-			cnt = cnt == 0 ? 0 : cnt - 1;
-		}
+		// while ((*field | l_tet) != (*field + l_tet) || (sizes[3] != 0))
+		// {
+		// 	l_tet = l_tet >> 1;
+		// 	if (sizes[0] + get_lfig_length(tets[index]) > sizes[2])
+		// 		l_tet = make_shift(l_tet, &sizes[0], &sizes[1]);
+		// 	else
+		// 		sizes[0]++;
+		// 	if (get_lfig_height(tets[index]) + (sizes[1]) > sizes[2] + 1)
+		// 		return (1);
+		// 	sizes[3] = sizes[3] == 0 ? 0 : sizes[3] - 1;
+		// }
+		if (get_pos(field, &l_tet, &sizes, tets[index]) == 1)
+			return (1);
 		*field = *field | l_tet;
 		if (proccess(field, tets, index + 1, f_size) == 1)
-			rm_tet(field, &cnt, l_tet);
+			rm_tet(field, &sizes[3], l_tet);
 		else
 		{
 			tets[index] = l_tet;
@@ -353,7 +377,7 @@ void		get_solution(unsigned long *tets)
 		i++;
 	}
 	if (i > 8)
-		ft_putstr("error\n");
+		ft_putstr("error3\n");
 	else
 		render_f(tets, i);
 }
@@ -373,13 +397,13 @@ int			main(int argc, char **argv)
 	tet = read_tet(fd);
 	if (check_input(tet))
 	{
-		ft_putstr("error\n");
+		ft_putstr("error1\n");
 		return (1);
 	}
 	tets_arr = parse_tet(tet);
 	if (check_tet(tets_arr, tet))
 	{
-		ft_putstr("error\n");
+		ft_putstr("error2\n");
 		return (1);
 	}
 	shift_tets(tets_arr);
