@@ -1,35 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/25 14:01:06 by nventres          #+#    #+#             */
-/*   Updated: 2019/12/26 19:16:42 by nventres         ###   ########.fr       */
+/*   Created: 2019/12/26 18:58:57 by nventres          #+#    #+#             */
+/*   Updated: 2019/12/26 19:16:14 by nventres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-unsigned short	*parse_tet(char *tet_str)
+int	check_input(char *str)
 {
-	int				tets_len;
-	char			*tmp;
-	unsigned short	*tets;
-	int				i;
+	int	ch;
+	int	rows;
 
-	tmp = tet_str;
-	tet_str = ft_strrmchr(tet_str, '\n');
-	tets_len = ft_strlen(tet_str) / 4;
-	tets = (unsigned short *)ft_memalloc(sizeof(short) * (tets_len) + 1);
-	tets[tets_len] = 0;
-	i = 0;
-	while (tet_str[i])
+	ch = 0;
+	rows = 0;
+	while (*str)
 	{
-		if (tet_str[i] == '#')
-			tets[i / 16] = tets[i / 16] | 1 << (15 - i % 16);
-		i++;
+		if (*str == '\n')
+			if (ch == 4)
+			{
+				ch = 0;
+				rows++;
+			}
+			else if (ch == 0 && rows == 4)
+				rows = 0;
+			else
+				return (1);
+		else if (*str == '#' || *str == '.')
+			ch++;
+		else
+			return (1);
+		str++;
 	}
-	return (tets);
+	return (0);
 }

@@ -1,5 +1,5 @@
 NAME = fillit
-SRCS = ./parse.c
+SRCS = ./*.c
 OBJS = ./*.o
 HDR = ./fillit.h
 FLAGS = -Wall -Wextra -Werror
