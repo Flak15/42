@@ -1,24 +1,42 @@
-NAME = fillit
-SRCS = ./*.c
-OBJS = ./*.o
-HDR = ./fillit.h
-FLAGS = -Wall -Wextra -Werror
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: knarwhal <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2019/10/12 18:00:02 by knarwhal          #+#    #+#              #
+#    Updated: 2019/10/12 18:53:33 by knarwhal         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-LIBFT = libft/
+# program name
+NAME = fillit
+# compilation flags
+FLAGS = -Wall -Wextra -Werror
+# source files
+SRCS = $(wildcard proj_fillit/*.c)
+# object files
+OBJS = $(wildcard proj_fillit/*.o)
+# headers
+HDRS = $(wildcard proj_fillit/*.h)
+# libft
+LIB = ./libft/libft.a
 
 all: $(NAME)
 
-$(NAME):
-	make -C $(LIBFT)
-	gcc $(FLAGS) -o $(NAME) $(SRCS) -I $(HDR) -L. libft/libft.a
+$(NAME): $(SRCS) $(OBJS) $(HDRS)
+	make -C libft/ all
+	gcc $(FLAGS) -o $(NAME) $(SRCS) $(OBJS) $(LIB)
 
 clean:
-	/bin/rm -f $(OBJS)
-	make -C $(LIBFT) clean
+	make -C libft/ clean
+	rm -f $(OBJS)
 
 fclean: clean
-	/bin/rm -f $(NAME)
-	make -C $(LIBFT) fclean
+	make -C libft/ fclean
+	rm -f $(NAME)
 
 re: fclean all
-.PHONY: clean fclean all re update
+
+.PHONY: all clean fclean re

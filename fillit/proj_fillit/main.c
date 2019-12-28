@@ -6,7 +6,7 @@
 /*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 18:55:34 by nventres          #+#    #+#             */
-/*   Updated: 2019/12/26 19:16:05 by nventres         ###   ########.fr       */
+/*   Updated: 2019/12/28 14:20:53 by nventres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int			main(int argc, char **argv)
 		ft_putstr("error\n");
 		return (1);
 	}
-	if (check_input(tet = read_tet(fd)) ||
+	if (!(tet = parse(argv[1])) ||
 	check_tet(tets_arr = parse_tet(tet), tet))
 	{
 		ft_putstr("error\n");

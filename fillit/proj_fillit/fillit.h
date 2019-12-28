@@ -6,7 +6,7 @@
 /*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 19:18:27 by nventres          #+#    #+#             */
-/*   Updated: 2019/12/26 19:18:34 by nventres         ###   ########.fr       */
+/*   Updated: 2019/12/28 14:29:05 by nventres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,9 @@
 # define BUFF_SIZE 8
 # include <stdio.h>
 # include <fcntl.h>
-# include "libft.h"
+# include "../libft/libft.h"
 
 char			*read_tet(int fd);
-int				check_input(char *str);
 unsigned short	*parse_tet(char *tet_str);
 int				check_bottom(unsigned short tet, int i);
 int				check_left(unsigned short tet, int i);
@@ -32,4 +31,5 @@ int				get_lfig_height(unsigned long tet);
 unsigned long	*convert_all(unsigned short *tets);
 unsigned long	convert(unsigned short tet);
 void			shift_tets(unsigned short *tets);
+char			*parse(char *argv);
 #endif
