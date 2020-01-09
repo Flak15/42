@@ -5,13 +5,22 @@
 
 int	mouse_win1(int button,int x,int y, void *p)
 {
-	// t_data *data;
-	(void)p;
-	// data = (t_data *)p;
-	// if (button == 1)
-	// {
-	// 	mlx_clear_window(data->mlx, data->win);
-	// }
+	t_data *data;
+	int i;
+	
+	data = (t_data *)p;
+	i = (x * 4) + (y * data->size_line * 4);
+	
+	if (button == 1)
+	{
+		data->data_addr[i] = 'f';
+		data->data_addr[i + 1] = 'f';
+		data->data_addr[i + 2] = 'f';
+		// mlx_destroy_image(data->mlx, data->img_ptr);
+		mlx_put_image_to_window(data->mlx, data->win, data->img_ptr, 0, 0);
+	}
+	
+
 	printf("Mouse in Win1, button %d at %dx%d.\n",button,x,y);
 	return (0);
 }
@@ -52,8 +61,8 @@ int main(void)
 
 	while (i++ < 200)
 	mlx_pixel_put(data->mlx, data->win, 100, i, 0xFFFFFF);
-	mlx_mouse_hook(data->win, mouse_win1, 0);
-	mlx_hook(data->win, MotionNotify, PointerMotionMask, mouse_win3, data);
+	mlx_mouse_hook(data->win, mouse_win1, data);
+	//mlx_hook(data->win, MotionNotify, PointerMotionMask, mouse_win3, data);
 	mlx_loop(data->mlx);
 	return (0);
 }
