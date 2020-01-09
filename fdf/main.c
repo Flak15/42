@@ -1,12 +1,13 @@
 
 #include "fdf.h"
-
+#include "mlx.h"
+#include "libft.h"
 
 int	mouse_win1(int button,int x,int y, void *p)
 {
-	t_data *data;
-
-	data = (t_data *)p;
+	// t_data *data;
+	(void)p;
+	// data = (t_data *)p;
 	// if (button == 1)
 	// {
 	// 	mlx_clear_window(data->mlx, data->win);
@@ -38,6 +39,7 @@ t_data	*init(void)
 		&(data->size_line), &(data->endian));
 	return (data);
 }
+
 int main(void)
 {
 

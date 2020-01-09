@@ -1,6 +1,6 @@
-#include "minilibx/mlx.h"
+
 #include <stdio.h>
-#include "libft.h"
+
 
 #define PointerMotionMask		(1L<<6)
 #define MotionNotify		6

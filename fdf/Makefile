@@ -6,6 +6,9 @@ ATTACH = -L minilibx_macos -lmlx -L. -lft -framework OpenGL -framework AppKit
 SRC = main.c
 OBJ = $(subst .c,.o,$(SRC))
 
+L:
+	gcc -o $(NAME) main.c -L. -lft -lmlx -L /usr/lib/ -lXext -lX11
+
 all: $(NAME)
 
 $(NAME):
