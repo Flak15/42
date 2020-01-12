@@ -16,3 +16,9 @@ typedef struct	s_data
 	int		size_line;
 	int		endian;
 }	t_data;
+
+typedef struct s_point
+{
+	int x;
+	int y;
+}	t_point;

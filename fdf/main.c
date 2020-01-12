@@ -2,25 +2,71 @@
 #include "fdf.h"
 #include "mlx.h"
 #include "libft.h"
+#include <math.h>
+
+void plot(int x, int y, t_data *data)
+{
+	int i;
+	
+	i = (x * 4) + (y * data->size_line);
+	data->data_addr[i] = (char)255;
+	data->data_addr[i + 1] = (char)255;
+	data->data_addr[i + 2] = (char)255;
+}
+
+void print_line(t_point st, t_point end, t_data *data)
+{
+	int deltax = abs(end.x - st.x);
+	int deltay = abs(end.y - st.y);
+	int error = 0;
+	int deltaerr = (deltay + 1);
+	int y = st.y;
+	int diry = end.y - st.y > 0 ? 1 : -1;
+
+	while (st.x <= end.x)
+	{
+		plot(st.x, y, data);
+		error = error + deltaerr;
+		if (error >= (deltax + 1))
+		{
+			y = y + diry;
+			error = error - (deltax + 1);
+		}
+		st.x++;
+	}
+}
+
+
+
+void draw_image(t_data *data)
+{
+
+
+	t_point one;
+	t_point two;
+
+	one.x = 10;
+	one.y = 200;
+
+	two.x = 400;
+	two.y = 100;
+
+	print_line(one, two, data);
+}
 
 int	mouse_win1(int button,int x,int y, void *p)
 {
 	t_data *data;
-	int i;
+	
 
 	data = (t_data *)p;
-	i = (x * 4) + (y * data->size_line);
-
+	
+	draw_image(data);
 	if (button == 1)
 	{
-		data->data_addr[i] = 255;
-		data->data_addr[i + 1] = 255;
-		data->data_addr[i + 2] = 255;
-		// mlx_destroy_image(data->mlx, data->img_ptr);
+		
 		mlx_put_image_to_window(data->mlx, data->win, data->img_ptr, 0, 0);
 	}
-
-
 	printf("Mouse in Win1, button %d at %dx%d.\n",button,x,y);
 	return (0);
 }
