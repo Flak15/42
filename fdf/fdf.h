@@ -22,3 +22,10 @@ typedef struct s_point
 	int x;
 	int y;
 }	t_point;
+
+typedef struct s_map
+{
+	int width;
+	int height;
+	int **depth_arr;
+}	t_map

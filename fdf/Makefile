@@ -2,15 +2,17 @@ NAME = fdf
 
 FLAGS = -Wall -Wextra -Werror
 ATTACH = -L minilibx_macos -lmlx -L./libft -lft -framework OpenGL -framework AppKit 
+ATTACH_L = -L./libft -lft -L. -lmlx -L /usr/lib/ -lXext -lX11
 
-SRC = main.c
+SRC = parse.c w_count.c main.c
 OBJ = $(subst .c,.o,$(SRC))
 
 
 all: $(NAME)
 
 L:
-	gcc -o $(NAME) main.c -L. -lft -lmlx -L /usr/lib/ -lXext -lX11
+	gcc $(FLAGS) -c $(SRC)
+	gcc $(FLAGS) -o $(NAME) $(OBJ) $(ATTACH_L)
 
 $(NAME):
 	gcc $(FLAGS) -c $(SRC)

@@ -21,18 +21,34 @@ void print_line(t_point st, t_point end, t_data *data)
 	int error = 0;
 	int deltaerr = (deltay + 1);
 	int y = st.y;
-	int diry = end.y - st.y > 0 ? 1 : -1;
-
-	while (st.x <= end.x)
-	{
-		plot(st.x, y, data);
-		error = error + deltaerr;
-		if (error >= (deltax + 1))
+	int x = st.x;
+	//int diry = end.y - st.y > 0 ? 1 : -1;
+	if (deltax > deltay)
+		while (x <= end.x)
 		{
-			y = y + diry;
-			error = error - (deltax + 1);
+			plot(x, y, data);
+			error = error + deltaerr;
+			if (error >= (deltax + 1))
+			{
+				y = y + (end.y - st.y > 0 ? 1 : -1);
+				error = error - (deltax + 1);
+			}
+			x++;
 		}
-		st.x++;
+	else
+	{
+		deltaerr = deltax + 1;
+		while (y <= end.y)
+		{
+			plot(x, y, data);
+			error = error + deltaerr;
+			if (error >= (deltay + 1))
+			{
+				x = x + (end.x - st.x > 0 ? 1 : -1);
+				error = error - (deltay + 1);
+			}
+			y++;
+		}
 	}
 }
 
@@ -46,9 +62,9 @@ void draw_image(t_data *data)
 	t_point two;
 
 	one.x = 10;
-	one.y = 200;
+	one.y = 100;
 
-	two.x = 400;
+	two.x = 100;
 	two.y = 100;
 
 	print_line(one, two, data);
