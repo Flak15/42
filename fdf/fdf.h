@@ -1,7 +1,7 @@
 
 #include <stdio.h>
-
-
+# include <fcntl.h>
+#include "get_next_line.h"
 #define PointerMotionMask		(1L<<6)
 #define MotionNotify		6
 #define WIDTH		700
@@ -28,4 +28,7 @@ typedef struct s_map
 	int width;
 	int height;
 	int **depth_arr;
-}	t_map
+}	t_map;
+
+void	read_file(char *file_name, t_map *map);
+int	count_words(char *str, char delim);

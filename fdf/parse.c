@@ -1,6 +1,6 @@
 #include "fdf.h"
 
-int		get_heigth(char *file_name)
+int     get_heigth(char *file_name)
 {
 	char *line;
 	int fd;
@@ -26,13 +26,13 @@ int		get_width(char *file_name)
 
 	fd = open(file_name, O_RDONLY, 0);
 	get_next_line(fd, &line);
-	width = ft_wdcounter(line, ' ');
+	width = count_words(line, ' ');
 	free(line);
 	close(fd);
-	return
+	return (width);
 }
 
-void fill_depth(t_map *map, char *line)
+void fill_depth(int *depth_line, char *line)
 {
 	char **nums;
 	int i;
@@ -41,10 +41,11 @@ void fill_depth(t_map *map, char *line)
 	nums = ft_strsplit(line, ' ');
 	while (nums[i])
 	{
-		map->depth_arr[i] = ft_atoi(nums[i]);
+		depth_line[i] = ft_atoi(nums[i]);
 		free(nums[i]);
 		i++;
 	}
+    free(nums);
 }
 
 void	read_file(char *file_name, t_map *map)
@@ -64,8 +65,10 @@ void	read_file(char *file_name, t_map *map)
 	i = 0;
 	while (get_next_line(fd, &line))
 	{
-		fill_matrix(map, line);
+		fill_depth(map->depth_arr[i], line);
 		free(line);
+        i++;
 	}
-
+    map->depth_arr[i] = 0;
+    close(fd);
 }
