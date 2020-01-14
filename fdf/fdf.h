@@ -2,10 +2,23 @@
 #include <stdio.h>
 # include <fcntl.h>
 #include "get_next_line.h"
+#include <math.h>
+#include "libft.h"
+#include "mlx.h"
+#define MAX(a, b) (a > b ? a : b)
 #define PointerMotionMask		(1L<<6)
 #define MotionNotify		6
 #define WIDTH		700
 #define HEIGHT		700
+#define DEF_ZOOM	20
+#define DEF_PROJ	20
+typedef struct s_map
+{
+	int width;
+	int height;
+	int **depth_arr;
+}	t_map;
+
 typedef struct	s_data
 {
 	void	*mlx;
@@ -15,6 +28,9 @@ typedef struct	s_data
 	int		bpp;
 	int		size_line;
 	int		endian;
+	int		zoom;
+	int		proj;
+	t_map	*map;
 }	t_data;
 
 typedef struct s_point
@@ -23,12 +39,9 @@ typedef struct s_point
 	int y;
 }	t_point;
 
-typedef struct s_map
-{
-	int width;
-	int height;
-	int **depth_arr;
-}	t_map;
+
 
 void	read_file(char *file_name, t_map *map);
-int	count_words(char *str, char delim);
+int		count_words(char *str, char delim);
+void	draw_line(float x, float y, float x1, float y1, t_data *data, int color);
+void	draw_map(t_data *data);

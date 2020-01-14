@@ -45,7 +45,7 @@ void fill_depth(int *depth_line, char *line)
 		free(nums[i]);
 		i++;
 	}
-    free(nums);
+	free(nums);
 }
 
 void	read_file(char *file_name, t_map *map)
@@ -67,8 +67,8 @@ void	read_file(char *file_name, t_map *map)
 	{
 		fill_depth(map->depth_arr[i], line);
 		free(line);
-        i++;
+		i++;
 	}
-    map->depth_arr[i] = 0;
-    close(fd);
+	map->depth_arr[i] = 0;
+	close(fd);
 }

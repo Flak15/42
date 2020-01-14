@@ -1,8 +1,5 @@
 
 #include "fdf.h"
-#include "mlx.h"
-#include "libft.h"
-#include <math.h>
 
 void plot(int x, int y, t_data *data)
 {
@@ -108,23 +105,40 @@ t_data	*init(void)
 	data->img_ptr = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	data->data_addr = mlx_get_data_addr(data->img_ptr, &(data->bpp),
 		&(data->size_line), &(data->endian));
+	data->map = (t_map *)ft_memalloc(sizeof(t_map));
+	data->zoom = DEF_ZOOM;
+	data->proj = DEF_PROJ;
 	return (data);
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
 
-	int i = 100;
+	int i = 0;
+	int j;
 
 	t_data *data;
-
+	
+	if (argc != 2)
+		return (1);
 	data = init();
 
-
-	printf("bpp: %d, size_line: %d, endian: %d\n", data->bpp, data->size_line, data->endian);
-	mlx_pixel_put(data->mlx, data->win, 100, i, 0xFFFFFF);
-	mlx_mouse_hook(data->win, mouse_win1, data);
-	//mlx_hook(data->win, MotionNotify, PointerMotionMask, mouse_win3, data);
+	read_file(argv[1], data->map);
+	
+	while (i < data->map->height)
+	{
+		j = 0;
+		while (j < data->map->width)
+		{
+			printf("%3d", data->map->depth_arr[i][j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+	draw_map(data);
+	// mlx_mouse_hook(data->win, mouse_win1, data);
+	// mlx_hook(data->win, MotionNotify, PointerMotionMask, mouse_win3, data);
 	mlx_loop(data->mlx);
 	return (0);
 }
