@@ -10,8 +10,10 @@
 #define MotionNotify		6
 #define WIDTH		700
 #define HEIGHT		700
-#define DEF_ZOOM	20
-#define DEF_PROJ	20
+#define DEF_ZOOM	30
+#define DEF_PROJ	0.8
+#define DEF_SHIFT	220
+
 typedef struct s_map
 {
 	int width;
@@ -43,5 +45,5 @@ typedef struct s_point
 
 void	read_file(char *file_name, t_map *map);
 int		count_words(char *str, char delim);
-void	draw_line(float x, float y, float x1, float y1, t_data *data, int color);
+void	draw_line(float x, float y, float x1, float y1, t_data *data);
 void	draw_map(t_data *data);
