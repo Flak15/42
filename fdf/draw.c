@@ -6,43 +6,50 @@ void	isometric(float *x, float *y, int z)
 	*y = (*x + *y) * sin(DEF_PROJ) - z;
 }
 
+void plot(int x, int y, t_data *data, int color)
+{
+	int i;
+	
+	i = (x * 4) + (y * data->size_line);
+	data->data_addr[i] = color;
+	data->data_addr[i + 1] = color >> 8;
+	data->data_addr[i + 2] = color >> 16;
+}
+
 void	draw_line(float x, float y, float x1, float y1, t_data *data)
 {
 	float x_step;
 	float y_step;
 	int max;
-    int z;
-    int z1;
-    int color;
+	int z;
+	int z1;
+	int color;
 
-    
-
-    z = data->map->depth_arr[(int)y][(int)x];
-    z1 = data->map->depth_arr[(int)y1][(int)x1];
+	z = data->map->depth_arr[(int)y][(int)x];
+	z1 = data->map->depth_arr[(int)y1][(int)x1];
 	x *= data->zoom;
 	y *= data->zoom;
 	x1 *= data->zoom;
 	y1 *= data->zoom;
 
-    color = (z || z1) ? 0xff0000 : 0xffffff;
+	color = (z || z1) ? 0xff0000 : 0xffffff;
 
-    isometric(&x, &y, z);
-    isometric(&x1, &y1, z1);
+	isometric(&x, &y, z);
+	isometric(&x1, &y1, z1);
 
-    x += DEF_SHIFT;
-    y += DEF_SHIFT;
-    x1 += DEF_SHIFT;
-    y1 += DEF_SHIFT;
+	x += data->x_shift;
+	y += data->y_shift;
+	x1 += data->x_shift;
+	y1 += data->y_shift;
 
-    x_step = x1 - x;
+	x_step = x1 - x;
 	y_step = y1 - y;
 	max = MAX(abs(x_step), abs(y_step));
 	x_step /= max;
 	y_step /= max;
 	while((int)(x - x1) || (int)(y - y1))
 	{
-		
-		mlx_pixel_put(data->mlx, data->win, x, y, color);
+		plot(x, y, data, color);
 		x += x_step;
 		y += y_step;
 	}
@@ -69,5 +76,6 @@ void	draw_map(t_data *data)
 		}
 		y++;
 	}
+	mlx_put_image_to_window(data->mlx, data->win, data->img_ptr, 0, 0);
 	
 }

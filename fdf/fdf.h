@@ -32,6 +32,8 @@ typedef struct	s_data
 	int		endian;
 	int		zoom;
 	int		proj;
+	int		x_shift;
+	int		y_shift;
 	t_map	*map;
 }	t_data;
 
@@ -47,3 +49,4 @@ void	read_file(char *file_name, t_map *map);
 int		count_words(char *str, char delim);
 void	draw_line(float x, float y, float x1, float y1, t_data *data);
 void	draw_map(t_data *data);
+void	plot(int x, int y, t_data *data, int color);

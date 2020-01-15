@@ -1,70 +1,10 @@
 
 #include "fdf.h"
 
-void plot(int x, int y, t_data *data)
+void	redraw_window(t_data *data)
 {
-	int i;
-	
-	i = (x * 4) + (y * data->size_line);
-	data->data_addr[i] = (char)255;
-	data->data_addr[i + 1] = (char)255;
-	data->data_addr[i + 2] = (char)255;
-}
-
-void print_line(t_point st, t_point end, t_data *data)
-{
-	int deltax = abs(end.x - st.x);
-	int deltay = abs(end.y - st.y);
-	int error = 0;
-	int deltaerr = (deltay + 1);
-	int y = st.y;
-	int x = st.x;
-	//int diry = end.y - st.y > 0 ? 1 : -1;
-	if (deltax > deltay)
-		while (x <= end.x)
-		{
-			plot(x, y, data);
-			error = error + deltaerr;
-			if (error >= (deltax + 1))
-			{
-				y = y + (end.y - st.y > 0 ? 1 : -1);
-				error = error - (deltax + 1);
-			}
-			x++;
-		}
-	else
-	{
-		deltaerr = deltax + 1;
-		while (y <= end.y)
-		{
-			plot(x, y, data);
-			error = error + deltaerr;
-			if (error >= (deltay + 1))
-			{
-				x = x + (end.x - st.x > 0 ? 1 : -1);
-				error = error - (deltay + 1);
-			}
-			y++;
-		}
-	}
-}
-
-
-
-void draw_image(t_data *data)
-{
-
-
-	t_point one;
-	t_point two;
-
-	one.x = 10;
-	one.y = 100;
-
-	two.x = 100;
-	two.y = 100;
-
-	print_line(one, two, data);
+	ft_bzero(data->data_addr, WIDTH * HEIGHT * data->bpp / 8);
+	draw_map(data);
 }
 
 int	mouse_win1(int button,int x,int y, void *p)
@@ -74,13 +14,46 @@ int	mouse_win1(int button,int x,int y, void *p)
 
 	data = (t_data *)p;
 	
-	draw_image(data);
-	if (button == 1)
+	if (button == 4)
 	{
-		
-		mlx_put_image_to_window(data->mlx, data->win, data->img_ptr, 0, 0);
+		data->zoom +=2;
+		redraw_window(data);
+	}
+	if (button == 5)
+	{
+		data->zoom -=2;
+		redraw_window(data);
 	}
 	printf("Mouse in Win1, button %d at %dx%d.\n",button,x,y);
+	return (0);
+}
+
+int key(int key, void *p)
+{
+	t_data *data;
+	
+	data = (t_data *)p;
+	printf("%d\n", key);
+	if (key == 65362)
+	{
+		data->y_shift -= 5;
+		redraw_window(data);
+	}
+	if (key == 65364)
+	{
+		data->y_shift += 5;
+		redraw_window(data);
+	}
+	if (key == 65361)
+	{
+		data->x_shift -= 5;
+		redraw_window(data);
+	}
+	if (key == 65363)
+	{
+		data->x_shift += 5;
+		redraw_window(data);
+	}
 	return (0);
 }
 
@@ -108,14 +81,13 @@ t_data	*init(void)
 	data->map = (t_map *)ft_memalloc(sizeof(t_map));
 	data->zoom = DEF_ZOOM;
 	data->proj = DEF_PROJ;
+	data->x_shift = DEF_SHIFT;
+	data->y_shift = DEF_SHIFT;
 	return (data);
 }
 
 int main(int argc, char **argv)
 {
-
-	int i = 0;
-	int j;
 
 	t_data *data;
 	
@@ -125,19 +97,11 @@ int main(int argc, char **argv)
 
 	read_file(argv[1], data->map);
 	
-	while (i < data->map->height)
-	{
-		j = 0;
-		while (j < data->map->width)
-		{
-			printf("%3d", data->map->depth_arr[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
+
 	draw_map(data);
-	// mlx_mouse_hook(data->win, mouse_win1, data);
+	
+	mlx_mouse_hook(data->win, mouse_win1, data);
+	mlx_key_hook(data->win, key, data);
 	// mlx_hook(data->win, MotionNotify, PointerMotionMask, mouse_win3, data);
 	mlx_loop(data->mlx);
 	return (0);
