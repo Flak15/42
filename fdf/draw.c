@@ -20,9 +20,10 @@ void	rot(float *x, float *y, int *z, t_data *data)
 {
 	(void)(x);
 	(void)data;
-	//double angle = 0.8;
-	*y = *y * cos(0.8) + *z * sin(0.8) ;
-	*z = -(*y) * sin(0.8) + *z * cos(0.8);
+	
+    double angle = data->rotate;
+	*y = *y * cos(angle) + *z * sin(angle);
+	*z = -(*y) * sin(angle) + *z * cos(angle);
 }
 
 void	draw_line(float x, float y, float x1, float y1, t_data *data)
@@ -43,8 +44,8 @@ void	draw_line(float x, float y, float x1, float y1, t_data *data)
 
 	color = (z || z1) ? 0xff0000 : 0xffffff;
 
-	isometric(&x, &y, z);
-	isometric(&x1, &y1, z1);
+	// isometric(&x, &y, z);
+	// isometric(&x1, &y1, z1);
 
 	rot(&x, &y, &z, data);
 	rot(&x1, &y1, &z1, data);

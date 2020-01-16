@@ -16,7 +16,7 @@ int	mouse_win1(int button,int x,int y, void *p)
 	
 	if (button == 1)
 	{
-		data->rotate = 0.8;
+		data->rotate += 0.1;
 		redraw_window(data);
 	}
 	if (button == 4)

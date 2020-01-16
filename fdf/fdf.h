@@ -11,7 +11,7 @@
 #define WIDTH		700
 #define HEIGHT		700
 #define DEF_ZOOM	30
-#define DEF_PROJ	0.8
+#define DEF_PROJ	0.523599
 #define DEF_SHIFT	220
 
 typedef struct s_map
@@ -34,7 +34,7 @@ typedef struct	s_data
 	int		proj;
 	int		x_shift;
 	int		y_shift;
-	float	rotate;
+	double	rotate;
 	t_map	*map;
 }	t_data;
 
