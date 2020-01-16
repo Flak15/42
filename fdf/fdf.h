@@ -34,6 +34,7 @@ typedef struct	s_data
 	int		proj;
 	int		x_shift;
 	int		y_shift;
+	float	rotate;
 	t_map	*map;
 }	t_data;
 

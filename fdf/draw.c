@@ -16,6 +16,15 @@ void plot(int x, int y, t_data *data, int color)
 	data->data_addr[i + 2] = color >> 16;
 }
 
+void	rot(float *x, float *y, int *z, t_data *data)
+{
+	(void)(x);
+	(void)data;
+	//double angle = 0.8;
+	*y = *y * cos(0.8) + *z * sin(0.8) ;
+	*z = -(*y) * sin(0.8) + *z * cos(0.8);
+}
+
 void	draw_line(float x, float y, float x1, float y1, t_data *data)
 {
 	float x_step;
@@ -37,6 +46,9 @@ void	draw_line(float x, float y, float x1, float y1, t_data *data)
 	isometric(&x, &y, z);
 	isometric(&x1, &y1, z1);
 
+	rot(&x, &y, &z, data);
+	rot(&x1, &y1, &z1, data);
+
 	x += data->x_shift;
 	y += data->y_shift;
 	x1 += data->x_shift;
@@ -49,6 +61,8 @@ void	draw_line(float x, float y, float x1, float y1, t_data *data)
 	y_step /= max;
 	while((int)(x - x1) || (int)(y - y1))
 	{
+		if (x > WIDTH || y > HEIGHT || y < 0 || x < 0)
+			break ;
 		plot(x, y, data, color);
 		x += x_step;
 		y += y_step;

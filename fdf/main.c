@@ -14,6 +14,11 @@ int	mouse_win1(int button,int x,int y, void *p)
 
 	data = (t_data *)p;
 	
+	if (button == 1)
+	{
+		data->rotate = 0.8;
+		redraw_window(data);
+	}
 	if (button == 4)
 	{
 		data->zoom +=2;
@@ -36,23 +41,28 @@ int key(int key, void *p)
 	printf("%d\n", key);
 	if (key == 65362)
 	{
-		data->y_shift -= 5;
+		data->y_shift -= 10;
 		redraw_window(data);
 	}
 	if (key == 65364)
 	{
-		data->y_shift += 5;
+		data->y_shift += 10;
 		redraw_window(data);
 	}
 	if (key == 65361)
 	{
-		data->x_shift -= 5;
+		data->x_shift -= 10;
 		redraw_window(data);
 	}
 	if (key == 65363)
 	{
-		data->x_shift += 5;
+		data->x_shift += 10;
 		redraw_window(data);
+	}
+	if (key == 65307)
+	{
+		// free all
+		exit(0);
 	}
 	return (0);
 }
@@ -83,6 +93,7 @@ t_data	*init(void)
 	data->proj = DEF_PROJ;
 	data->x_shift = DEF_SHIFT;
 	data->y_shift = DEF_SHIFT;
+	data->rotate = 1;
 	return (data);
 }
 
