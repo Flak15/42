@@ -8,7 +8,7 @@
 #define MAX(a, b) (a > b ? a : b)
 #define PointerMotionMask		(1L<<6)
 #define MotionNotify		6
-#define WIDTH		700
+#define WIDTH		1000
 #define HEIGHT		700
 #define DEF_ZOOM	30
 #define DEF_PROJ	0.523599
@@ -34,7 +34,8 @@ typedef struct	s_data
 	int		proj;
 	int		x_shift;
 	int		y_shift;
-	double	rotate;
+	double	rotate_x;
+	double	rotate_y;
 	t_map	*map;
 }	t_data;
 
@@ -50,4 +51,4 @@ void	read_file(char *file_name, t_map *map);
 int		count_words(char *str, char delim);
 void	draw_line(float x, float y, float x1, float y1, t_data *data);
 void	draw_map(t_data *data);
-void	plot(int x, int y, t_data *data, int color);
+void	plot(int x, int y, t_data *data, int color, float intense);

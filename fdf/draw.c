@@ -6,24 +6,34 @@ void	isometric(float *x, float *y, int z)
 	*y = (*x + *y) * sin(DEF_PROJ) - z;
 }
 
-void plot(int x, int y, t_data *data, int color)
+void plot(int x, int y, t_data *data, int color, float intense)
 {
 	int i;
 	
 	i = (x * 4) + (y * data->size_line);
-	data->data_addr[i] = color;
-	data->data_addr[i + 1] = color >> 8;
-	data->data_addr[i + 2] = color >> 16;
+	data->data_addr[i] = color * intense;
+	data->data_addr[i + 1] = (color >> 8) * intense;
+	data->data_addr[i + 2] = (color >> 16) * intense;
 }
 
-void	rot(float *x, float *y, int *z, t_data *data)
+void	rot_x(float *x, float *y, int *z, t_data *data)
 {
 	(void)(x);
-	(void)data;
 	
-    double angle = data->rotate;
+	
+	double angle = data->rotate_x;
 	*y = *y * cos(angle) + *z * sin(angle);
 	*z = -(*y) * sin(angle) + *z * cos(angle);
+}
+
+void	rot_y(float *x, float *y, int *z, t_data *data)
+{
+	(void)(y);
+	
+	
+	double angle = data->rotate_y;
+	*x = *x * cos(angle) + *z * sin(angle);
+	*z = -(*x) * sin(angle) + *z * cos(angle);
 }
 
 void	draw_line(float x, float y, float x1, float y1, t_data *data)
@@ -47,14 +57,17 @@ void	draw_line(float x, float y, float x1, float y1, t_data *data)
 	// isometric(&x, &y, z);
 	// isometric(&x1, &y1, z1);
 
-	rot(&x, &y, &z, data);
-	rot(&x1, &y1, &z1, data);
+	rot_x(&x, &y, &z, data);
+	rot_x(&x1, &y1, &z1, data);
+
+	rot_y(&x, &y, &z, data);
+	rot_y(&x1, &y1, &z1, data);
 
 	x += data->x_shift;
 	y += data->y_shift;
 	x1 += data->x_shift;
 	y1 += data->y_shift;
-
+// https://habr.com/ru/post/185086/
 	x_step = x1 - x;
 	y_step = y1 - y;
 	max = MAX(abs(x_step), abs(y_step));
@@ -64,7 +77,7 @@ void	draw_line(float x, float y, float x1, float y1, t_data *data)
 	{
 		if (x > WIDTH || y > HEIGHT || y < 0 || x < 0)
 			break ;
-		plot(x, y, data, color);
+		plot(x, y, data, color, 0.1);
 		x += x_step;
 		y += y_step;
 	}

@@ -16,7 +16,12 @@ int	mouse_win1(int button,int x,int y, void *p)
 	
 	if (button == 1)
 	{
-		data->rotate += 0.1;
+		data->rotate_x += 0.1;
+		redraw_window(data);
+	}
+	if (button == 3)
+	{
+		data->rotate_y += 0.1;
 		redraw_window(data);
 	}
 	if (button == 4)
@@ -93,7 +98,8 @@ t_data	*init(void)
 	data->proj = DEF_PROJ;
 	data->x_shift = DEF_SHIFT;
 	data->y_shift = DEF_SHIFT;
-	data->rotate = 1;
+	data->rotate_x = 1;
+	data->rotate_y = 1;
 	return (data);
 }
 
