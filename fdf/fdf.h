@@ -5,6 +5,7 @@
 #include <math.h>
 #include "libft.h"
 #include "mlx.h"
+#include "/usr/include/X11/X.h"
 #define MAX(a, b) (a > b ? a : b)
 #define PointerMotionMask		(1L<<6)
 #define MotionNotify		6
@@ -21,6 +22,12 @@ typedef struct s_map
 	int **depth_arr;
 }	t_map;
 
+typedef struct s_point
+{
+	int x;
+	int y;
+}	t_point;
+
 typedef struct	s_data
 {
 	void	*mlx;
@@ -36,19 +43,20 @@ typedef struct	s_data
 	int		y_shift;
 	double	rotate_x;
 	double	rotate_y;
+    double	rotate_z;
+    int     mouse_pressed;
+    t_point *r_start;
+    t_point *r_end;
 	t_map	*map;
 }	t_data;
 
-typedef struct s_point
-{
-	int x;
-	int y;
-}	t_point;
+
 
 
 
 void	read_file(char *file_name, t_map *map);
 int		count_words(char *str, char delim);
-void	draw_line(float x, float y, float x1, float y1, t_data *data);
+void	draw_line(int x, int y, int x1, int y1, t_data *data);
 void	draw_map(t_data *data);
-void	plot(int x, int y, t_data *data, int color, float intense);
+void	plot(int x, int y, t_data *data, int color);
+void BresenhamLine(int x0, int y0, int x1, int y1, t_data *data, int color);
