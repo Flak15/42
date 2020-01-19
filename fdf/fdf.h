@@ -5,10 +5,14 @@
 #include <math.h>
 #include "libft.h"
 #include "mlx.h"
-#include "/usr/include/X11/X.h"
+
 #define MAX(a, b) (a > b ? a : b)
 #define PointerMotionMask		(1L<<6)
 #define MotionNotify		6
+#define ButtonPressMask			(1L<<2)  
+#define ButtonReleaseMask		(1L<<3)  
+#define ButtonPress		4
+#define ButtonRelease		5
 #define WIDTH		1000
 #define HEIGHT		700
 #define DEF_ZOOM	30
