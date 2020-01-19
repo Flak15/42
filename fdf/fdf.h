@@ -24,6 +24,8 @@ typedef struct s_map
 	int width;
 	int height;
 	int **depth_arr;
+	int	min_depth;
+	int	max_depth;
 }	t_map;
 
 typedef struct s_point
@@ -47,10 +49,10 @@ typedef struct	s_data
 	int		y_shift;
 	double	rotate_x;
 	double	rotate_y;
-    double	rotate_z;
-    int     mouse_pressed;
-    t_point *r_start;
-    t_point *r_end;
+	double	rotate_z;
+	int		mouse_pressed;
+	t_point	*r_start;
+	t_point	*r_end;
 	t_map	*map;
 }	t_data;
 
@@ -58,7 +60,7 @@ typedef struct	s_data
 
 
 
-void	read_file(char *file_name, t_map *map);
+void	read_file(char *file_name, t_data *data);
 int		count_words(char *str, char delim);
 void	draw_line(int x, int y, int x1, int y1, t_data *data);
 void	draw_map(t_data *data);

@@ -140,15 +140,16 @@ t_data	*init(void)
 	data->data_addr = mlx_get_data_addr(data->img_ptr, &(data->bpp),
 		&(data->size_line), &(data->endian));
 	data->map = (t_map *)ft_memalloc(sizeof(t_map));
-    data->r_start = (t_point *)ft_memalloc(sizeof(t_point));
-    data->r_end = (t_point *)ft_memalloc(sizeof(t_point));
+	data->r_start = (t_point *)ft_memalloc(sizeof(t_point));
+	data->r_end = (t_point *)ft_memalloc(sizeof(t_point));
 	data->zoom = DEF_ZOOM;
 	data->proj = DEF_PROJ;
 	data->x_shift = 400;
 	data->y_shift = 200;
 	data->rotate_x = 0;
 	data->rotate_y = 0;
-
+	data->map->max_depth = 0;
+	data->map->min_depth = 0;
 	data->mouse_pressed = 0;
 	data->r_start->x = 0;
 	data->r_start->y = 0;
@@ -166,17 +167,17 @@ int main(int argc, char **argv)
 		return (1);
 	data = init();
 
-	read_file(argv[1], data->map);
+	read_file(argv[1], data);
 	
 
 	draw_map(data);
 	
 	// mlx_mouse_hook(data->win, mouse_win1, data);
-    
+	
 	mlx_key_hook(data->win, key, data);
 	mlx_hook(data->win, MotionNotify, PointerMotionMask, mouse_move, data);
-    mlx_hook(data->win, ButtonPress, ButtonPressMask, mouse_press, data);
-    mlx_hook(data->win, ButtonRelease, ButtonReleaseMask, mouse_release, data);
+	mlx_hook(data->win, ButtonPress, ButtonPressMask, mouse_press, data);
+	mlx_hook(data->win, ButtonRelease, ButtonReleaseMask, mouse_release, data);
 	mlx_loop(data->mlx);
 	return (0);
 }

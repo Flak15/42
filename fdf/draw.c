@@ -50,6 +50,12 @@ void shift(int *x, int *x1, int *y, int *y1, t_data *data)
 	*y1 += data->y_shift;
 }
 
+int		get_color(int z, int z1, t_data *data)
+{
+	MAX(z, z1);
+	if (z1 - z)
+}
+
 void	draw_line(int x, int y, int x1, int y1, t_data *data)
 {
 	// float x_step;
@@ -61,7 +67,7 @@ void	draw_line(int x, int y, int x1, int y1, t_data *data)
 
 	z = data->map->depth_arr[(int)y][(int)x];
 	z1 = data->map->depth_arr[(int)y1][(int)x1];
-	color = (z || z1) ? 0xff0000 : 0xffffff;
+	color =  get_color(z, z1, data); //(z || z1) ? : 0xffffff;
 	
 	zoom(&x, &x1, &y, &y1, data);
 
@@ -72,8 +78,8 @@ void	draw_line(int x, int y, int x1, int y1, t_data *data)
 	rot_x(&x1, &z1, data);
 	rot_y(&y, &z, data);
 	rot_y(&y1, &z1, data);
-	// isometric(&x, &y, z);
-	// isometric(&x1, &y1, z1);
+	isometric(&x, &y, z);
+	isometric(&x1, &y1, z1);
 	shift(&x, &x1, &y, &y1, data);
 	
 	BresenhamLine(x, y, x1, y1, data, color);
