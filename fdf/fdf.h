@@ -13,8 +13,8 @@
 #define ButtonReleaseMask		(1L<<3)  
 #define ButtonPress		4
 #define ButtonRelease		5
-#define WIDTH		1000
-#define HEIGHT		700
+#define WIDTH		1280
+#define HEIGHT		720
 #define DEF_ZOOM	30
 #define DEF_PROJ	0.523599
 #define DEF_SHIFT	220
@@ -44,13 +44,15 @@ typedef struct	s_data
 	int		size_line;
 	int		endian;
 	int		zoom;
+	int		flattening;
 	int		proj;
 	int		x_shift;
 	int		y_shift;
 	double	rotate_x;
 	double	rotate_y;
 	double	rotate_z;
-	int		mouse_pressed;
+	int		mb1_pressed;
+	int		mb2_pressed;
 	t_point	*r_start;
 	t_point	*r_end;
 	t_map	*map;

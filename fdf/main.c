@@ -34,7 +34,17 @@ int key(int key, void *p)
 	t_data *data;
 	
 	data = (t_data *)p;
-	//printf("%d\n", key);
+	// printf("%d\n", key);
+	if (key == 45)
+	{
+		data->flattening = data->flattening == 1 ? 1 : data->flattening - 1;
+		redraw_window(data);
+	}
+	if (key == 61)
+	{
+		data->flattening += 1;
+		redraw_window(data);
+	}
 	if (key == 65362)
 	{
 		data->y_shift -= 30;
@@ -68,17 +78,24 @@ int mouse_move(int x,int y, void *p)
 {
 	t_data *data;
 	data = (t_data *)p;
-	if (data->mouse_pressed)
+	if (data->mb1_pressed)
 	{
 		data->r_end->x = x;
 		data->r_end->y = y;
 		
-		data->rotate_x -= (data->r_start->x - data->r_end->x) * 0.002;
-		data->rotate_y -= (data->r_start->y - data->r_end->y) * 0.002;
+		data->rotate_y -= (data->r_start->x - data->r_end->x) * 0.002;
+		data->rotate_x -= (data->r_start->y - data->r_end->y) * 0.002;
 		
 		redraw_window(data);
 		data->r_start->x = x;
 		data->r_start->y = y;
+	}
+	if (data->mb2_pressed)
+	{
+		data->r_end->x = x;
+		data->rotate_z += (data->r_start->x - data->r_end->x) * 0.002;
+		redraw_window(data);
+		data->r_start->x = x;
 	}
 	return (0);
 }
@@ -90,17 +107,23 @@ int	mouse_press(int button, int x,int y, void *p)
 	data = (t_data *)p;
 	if (button == 4)
 	{
-		data->zoom +=2;
+		data->zoom +=1;
 		redraw_window(data);
 	}
 	if (button == 5)
 	{
-		data->zoom -=2;
+		data->zoom -=1;
 		redraw_window(data);
 	}
 	if (button == 1)
 	{
-		data->mouse_pressed = 1;
+		data->mb1_pressed = 1;
+		data->r_start->x = x;
+		data->r_start->y = y;
+	}
+	if (button == 3)
+	{
+		data->mb2_pressed = 1;
 		data->r_start->x = x;
 		data->r_start->y = y;
 	}
@@ -113,18 +136,18 @@ int	mouse_release(int button, int x,int y, void *p)
 	// (void)p;
 
 	data = (t_data *)p;
-	if (button == 1 )
+	if (button == 1)
 	{
-		
-		// mlx_pixel_put(data->mlx, data->win, x, y, 0xFFFFFF);
 		printf("Release, at %dx%d.\n",x,y);
-		data->mouse_pressed = 0;
-		// data->r_end->x = x;
-		// data->r_end->y = y;
-		printf("Rotate from %dx%d to %dx%d.\n", data->r_start->x ,data->r_start->y, data->r_end->x, data->r_end->y);
-		
+		data->mb1_pressed = 0;
+		printf("Rotate from %dx%d to %dx%d.\n", data->r_start->x ,data->r_start->y, data->r_end->x, data->r_end->y);	
 	}
-
+	if (button == 3)
+	{
+		printf("Release, at %dx%d.\n",x,y);
+		data->mb2_pressed = 0;
+		printf("Rotate from %dx%d to %dx%d.\n", data->r_start->x ,data->r_start->y, data->r_end->x, data->r_end->y);	
+	}
 	return (0);
 }
 
@@ -143,14 +166,17 @@ t_data	*init(void)
 	data->r_start = (t_point *)ft_memalloc(sizeof(t_point));
 	data->r_end = (t_point *)ft_memalloc(sizeof(t_point));
 	data->zoom = DEF_ZOOM;
+	data->flattening = 1;
 	data->proj = DEF_PROJ;
 	data->x_shift = 400;
 	data->y_shift = 200;
 	data->rotate_x = 0;
 	data->rotate_y = 0;
+	data->rotate_z = 0;
 	data->map->max_depth = 0;
 	data->map->min_depth = 0;
-	data->mouse_pressed = 0;
+	data->mb1_pressed = 0;
+	data->mb2_pressed = 0;
 	data->r_start->x = 0;
 	data->r_start->y = 0;
 	data->r_end->x = 0;

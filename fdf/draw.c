@@ -19,18 +19,39 @@ void plot(int x, int y, t_data *data, int color)
 	}
 }
 
-void	rot_x(int *x, int *z, t_data *data)
+void	rot_x(int *y, int *z, t_data *data)
 {
-	double angle = data->rotate_x;
-	*x = (*x - (data->map->width - 1) * data->zoom / 2) * cos(angle) + *z * sin(angle);
-	*z = -(*x) * sin(angle) + *z * cos(angle);
+	double angle; 
+	int prev_y;
+
+	prev_y = *y;
+	angle = data->rotate_x;
+	*y = (prev_y - (data->map->height - 1) * data->zoom / 2) * cos(angle) + *z * sin(angle);
+	*z = -prev_y * sin(angle) + *z * cos(angle);
 }
 
-void	rot_y(int *y, int *z, t_data *data)
+void	rot_y(int *x, int *z, t_data *data)
 {
-	double angle = data->rotate_y;
-	*y = (*y - (data->map->height - 1) * data->zoom / 2) * cos(angle) + *z * sin(angle);
-	*z = -(*y) * sin(angle) + *z * cos(angle);
+	double angle; 
+	int prev_x;
+
+	angle = data->rotate_y;
+	prev_x = *x;
+	*x = (prev_x - (data->map->width - 1) * data->zoom / 2) * cos(angle) + *z * sin(angle);
+	*z = -prev_x * sin(angle) + *z * cos(angle);
+}
+
+static void	rot_z(int *x, int *y, t_data *data)
+{
+	double angle; 
+	int prev_x;
+	int prev_y;
+
+	angle = data->rotate_z;
+	prev_x = *x;
+	prev_y = *y;
+	*x = prev_x * cos(angle) - prev_y * sin(angle);
+	*y = prev_x * sin(angle) + prev_y * cos(angle);
 }
 
 
@@ -52,53 +73,47 @@ void shift(int *x, int *x1, int *y, int *y1, t_data *data)
 
 int		get_color(int z, int z1, t_data *data)
 {
-	MAX(z, z1);
-	if (z1 - z)
+	int red;
+	int green;
+	int blue;
+	float percent;
+
+	
+	percent = (float)(MAX(z, z1) - data->map->min_depth) / 
+		(float)abs(data->map->max_depth - data->map->min_depth);
+	// printf("%f\n", percent);
+	red = 101 * (1 - percent) + (0xff * percent);
+	green = 67  * (1 - percent) + (0xff * percent);
+	blue = 33  * (1 - percent) + (0xff * percent);
+	return ((red << 16) | (green << 8) | blue);
+	
 }
 
 void	draw_line(int x, int y, int x1, int y1, t_data *data)
 {
-	// float x_step;
-	// float y_step;
-	// int max;
 	int z;
 	int z1;
 	int color;
 
 	z = data->map->depth_arr[(int)y][(int)x];
 	z1 = data->map->depth_arr[(int)y1][(int)x1];
-	color =  get_color(z, z1, data); //(z || z1) ? : 0xffffff;
-	
+	color =  get_color(z, z1, data);
 	zoom(&x, &x1, &y, &y1, data);
-
-	// z *= data->zoom / 10;
-	// z1 *= data->zoom / 2;
+	z *= data->flattening;
+	z1 *= data->flattening;
 	
-	rot_x(&x, &z, data);
-	rot_x(&x1, &z1, data);
-	rot_y(&y, &z, data);
-	rot_y(&y1, &z1, data);
+	rot_x(&y, &z, data);
+	rot_x(&y1, &z1, data);
+	rot_y(&x, &z, data);
+	rot_y(&x1, &z1, data);
+	rot_z(&x, &y, data);
+	rot_z(&x1, &y1, data);
 	isometric(&x, &y, z);
 	isometric(&x1, &y1, z1);
+
 	shift(&x, &x1, &y, &y1, data);
 	
 	BresenhamLine(x, y, x1, y1, data, color);
-// https://habr.com/ru/post/185086/
-
-
-	// x_step = x1 - x;
-	// y_step = y1 - y;
-	// max = MAX(abs(x_step), abs(y_step));
-	// x_step /= max;
-	// y_step /= max;
-	// while((int)(x - x1) || (int)(y - y1))
-	// {
-	// 	if (x > WIDTH || y > HEIGHT || y < 0 || x < 0)
-	// 		break ;
-	// 	plot(x, y, data, color, 0.5);
-	// 	x += x_step;
-	// 	y += y_step;
-	// }
 }
 
 
@@ -128,20 +143,18 @@ void BresenhamLine(int x0, int y0, int x1, int y1, t_data *data, int color)
 	}
 	int dx = x1 - x0;
 	int dy = abs(y1 - y0);
-	int error = dx / 2; // Здесь используется оптимизация с умножением на dx, чтобы избавиться от лишних дробей
-	int ystep = (y0 < y1) ? 1 : -1; // Выбираем направление роста координаты y
-	int y = y0;
-	int x = x0;
-	while ((x - x1) || (y - y1))
+	int error = dx / 2;
+	int ystep = (y0 < y1) ? 1 : -1;
+	while ((x0 - x1) || (y0 - y1))
 	{
-		plot(steep ? y : x, steep ? x : y, data, color);
+		plot(steep ? y0 : x0, steep ? x0 : y0, data, color);
 		error -= dy;
 		if (error < 0)
 		{
-			y += ystep;
+			y0 += ystep;
 			error += dx;
 		}
-		x++;
+		x0++;
 	}
 }
 
