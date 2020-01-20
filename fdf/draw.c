@@ -2,8 +2,13 @@
 
 void	isometric(int *x, int *y, int z)
 {
-	*x = (*x - *y) * cos(DEF_PROJ);
-	*y = (*x + *y) * sin(DEF_PROJ) - z;
+	int prev_x;
+	int prev_y;
+	
+	prev_x = *x;
+	prev_y = *y;
+	*x = (prev_x - prev_y) * cos(DEF_PROJ);
+	*y = (prev_x + prev_y) * sin(DEF_PROJ) - z;
 }
 
 void plot(int x, int y, t_data *data, int color)
@@ -26,7 +31,8 @@ void	rot_x(int *y, int *z, t_data *data)
 
 	prev_y = *y;
 	angle = data->rotate_x;
-	*y = (prev_y - (data->map->height - 1) * data->zoom / 2) * cos(angle) + *z * sin(angle);
+	// *y = (prev_y - (data->map->height - 1) * data->zoom / 2) * cos(angle) + *z * sin(angle);
+	*y = (prev_y) * cos(angle) + *z * sin(angle);
 	*z = -prev_y * sin(angle) + *z * cos(angle);
 }
 
@@ -37,7 +43,8 @@ void	rot_y(int *x, int *z, t_data *data)
 
 	angle = data->rotate_y;
 	prev_x = *x;
-	*x = (prev_x - (data->map->width - 1) * data->zoom / 2) * cos(angle) + *z * sin(angle);
+	*x = (prev_x) * cos(angle) + *z * sin(angle);
+	// *x = (prev_x - (data->map->width - 1) * data->zoom / 2) * cos(angle) + *z * sin(angle);
 	*z = -prev_x * sin(angle) + *z * cos(angle);
 }
 
@@ -81,7 +88,6 @@ int		get_color(int z, int z1, t_data *data)
 	
 	percent = (float)(MAX(z, z1) - data->map->min_depth) / 
 		(float)abs(data->map->max_depth - data->map->min_depth);
-	// printf("%f\n", percent);
 	red = 101 * (1 - percent) + (0xff * percent);
 	green = 67  * (1 - percent) + (0xff * percent);
 	blue = 33  * (1 - percent) + (0xff * percent);

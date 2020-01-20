@@ -58,10 +58,6 @@ typedef struct	s_data
 	t_map	*map;
 }	t_data;
 
-
-
-
-
 void	read_file(char *file_name, t_data *data);
 int		count_words(char *str, char delim);
 void	draw_line(int x, int y, int x1, int y1, t_data *data);
