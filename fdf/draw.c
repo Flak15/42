@@ -85,12 +85,13 @@ int		get_color(int z, int z1, t_data *data)
 	int blue;
 	float percent;
 
-
+	if (abs(data->map->max_depth - data->map->min_depth) == 0)
+		return (ST_COLOR);
 	percent = (float)(MAX(z, z1) - data->map->min_depth) /
 		(float)abs(data->map->max_depth - data->map->min_depth);
-	red = 101 * (1 - percent) + (0xff * percent);
-	green = 67  * (1 - percent) + (0xff * percent);
-	blue = 33  * (1 - percent) + (0xff * percent);
+	red = (ST_COLOR>>16) * (1 - percent) + ((END_COLOR>>16)  * percent);
+	green = (ST_COLOR>>8)  * (1 - percent) + ((END_COLOR>>16)  * percent);
+	blue = (ST_COLOR)  * (1 - percent) + ((END_COLOR>>16)  * percent);
 	return ((red << 16) | (green << 8) | blue);
 
 }
@@ -136,7 +137,7 @@ void BresenhamLine(int x0, int y0, int x1, int y1, t_data *data, int color)
 	int dy;
 	int error;
 	int ystep;
-	
+
 	steep = abs(y1 - y0) > abs(x1 - x0) ? 1 : 0;
 	if (steep)
 	{

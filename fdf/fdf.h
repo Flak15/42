@@ -29,6 +29,8 @@
 #define ARROW_RIGHT 124
 #define ARROW_DOWN 125
 #define ARROW_LEFT 123
+#define ST_COLOR 0xff0000
+#define END_COLOR 0x0000ff
 
 typedef struct s_map
 {

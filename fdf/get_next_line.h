@@ -6,7 +6,7 @@
 /*   By: nventres <nventres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/22 15:05:14 by nventres          #+#    #+#             */
-/*   Updated: 2019/09/22 15:20:42 by nventres         ###   ########.fr       */
+/*   Updated: 2020/01/21 19:01:59 by nventres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,11 @@
 # include "libft.h"
 
 int get_next_line(const int fd, char **line);
+
+typedef struct	s_arr
+{
+	int				fd;
+	char			*rest;
+	struct s_arr	*next;
+}				t_arr;
 #endif

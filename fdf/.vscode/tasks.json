@@ -1,0 +1,35 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=733558
+	// for the documentation about the tasks.json format
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "gcc build active file",
+			"command": "/usr/bin/gcc",
+			"args": [
+				"-g",
+				"~/42/fdf/kill.c",
+				"~/42/fdf/draw.c",
+				"~/42/fdf/get_next_line.c",
+				"~/42/fdf/w_count.c",
+				"~/42/fdf/parse.c",
+				"~/42/fdf/main.c",
+				"-lm",
+				"-L ~/42/fdf minilibx_macos -lmlx",
+				"-L ~/42/fdf/libft -lft",
+				"-framework OpenGL",
+				"-framework AppKit",
+				"-o",
+				"fdf"
+			],
+			"options": {
+				"cwd": "/usr/bin"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build"
+		}
+	]
+}
