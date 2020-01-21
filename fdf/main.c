@@ -129,15 +129,19 @@ t_data	*init(void)
 {
 	t_data	*data;
 
-	data = (t_data *)ft_memalloc(sizeof(t_data));
+	if (!(data = (t_data *)ft_memalloc(sizeof(t_data))))
+		kill(2);
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "FDF");
 	data->img_ptr = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	data->data_addr = mlx_get_data_addr(data->img_ptr, &(data->bpp),
 		&(data->size_line), &(data->endian));
-	data->map = (t_map *)ft_memalloc(sizeof(t_map));
-	data->r_start = (t_point *)ft_memalloc(sizeof(t_point));
-	data->r_end = (t_point *)ft_memalloc(sizeof(t_point));
+	if (!(data->map = (t_map *)ft_memalloc(sizeof(t_map))))
+		kill(2);
+	if (!(data->r_start = (t_point *)ft_memalloc(sizeof(t_point))))
+		kill(2);
+	if (!(data->r_end = (t_point *)ft_memalloc(sizeof(t_point))))
+		kill(2);
 	data->zoom = DEF_ZOOM;
 	data->flattening = 1;
 	data->proj = DEF_PROJ;
@@ -163,11 +167,9 @@ int main(int argc, char **argv)
 	t_data *data;
 
 	if (argc != 2)
-		return (1);
+		kill(3);
 	data = init();
-
 	read_file(argv[1], data);
-
 
 	draw_map(data);
 

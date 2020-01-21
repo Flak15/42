@@ -1,12 +1,14 @@
 #include "fdf.h"
 
-int     get_heigth(char *file_name)
+int	get_heigth(char *file_name)
 {
 	char *line;
 	int fd;
 	int height;
 
 	fd = open(file_name, O_RDONLY, 0);
+	if (fd < 0)
+		kill(1);
 	height = 0;
 	while(get_next_line(fd, &line))
 	{
@@ -25,6 +27,8 @@ int		get_width(char *file_name)
 	int width;
 
 	fd = open(file_name, O_RDONLY, 0);
+	if (fd < 0)
+		kill(1);
 	get_next_line(fd, &line);
 	width = count_words(line, ' ');
 	free(line);
@@ -47,11 +51,10 @@ void fill_depth(int *depth_line, char *line, t_map *map)
 		free(nums[i]);
 		i++;
 	}
-	
 	free(nums);
 }
 
-void	read_file(char *file_name, t_data *data)
+int	read_file(char *file_name, t_data *data)
 {
 	char *line;
 	int fd;
@@ -59,15 +62,17 @@ void	read_file(char *file_name, t_data *data)
 	t_map *map;
 
 	map = data->map;
-
 	map->height = get_heigth(file_name);
 	map->width = get_width(file_name);
-
-	map->depth_arr = (int **)malloc(sizeof(int *) * (map->height + 1));
+	if (!(map->depth_arr = (int **)malloc(sizeof(int *) * (map->height + 1))))
+		kill(2);
 	i = 0;
 	while (i <= map-> height)
-		map->depth_arr[i++] = (int *)malloc(sizeof(int) * (map->width + 1));
+		if (!(map->depth_arr[i++] = (int *)malloc(sizeof(int) * (map->width + 1))))
+			kill(2);
 	fd = open(file_name, O_RDONLY, 0);
+	if (fd < 0)
+		kill(1);
 	i = 0;
 	while (get_next_line(fd, &line))
 	{
@@ -77,4 +82,5 @@ void	read_file(char *file_name, t_data *data)
 	}
 	map->depth_arr[i] = 0;
 	close(fd);
+	return (0);
 }
