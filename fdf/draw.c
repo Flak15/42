@@ -4,7 +4,7 @@ void	isometric(int *x, int *y, int z)
 {
 	int prev_x;
 	int prev_y;
-	
+
 	prev_x = *x;
 	prev_y = *y;
 	*x = (prev_x - prev_y) * cos(DEF_PROJ);
@@ -26,7 +26,7 @@ void plot(int x, int y, t_data *data, int color)
 
 void	rot_x(int *y, int *z, t_data *data)
 {
-	double angle; 
+	double angle;
 	int prev_y;
 
 	prev_y = *y;
@@ -38,7 +38,7 @@ void	rot_x(int *y, int *z, t_data *data)
 
 void	rot_y(int *x, int *z, t_data *data)
 {
-	double angle; 
+	double angle;
 	int prev_x;
 
 	angle = data->rotate_y;
@@ -50,7 +50,7 @@ void	rot_y(int *x, int *z, t_data *data)
 
 static void	rot_z(int *x, int *y, t_data *data)
 {
-	double angle; 
+	double angle;
 	int prev_x;
 	int prev_y;
 
@@ -85,14 +85,14 @@ int		get_color(int z, int z1, t_data *data)
 	int blue;
 	float percent;
 
-	
-	percent = (float)(MAX(z, z1) - data->map->min_depth) / 
+
+	percent = (float)(MAX(z, z1) - data->map->min_depth) /
 		(float)abs(data->map->max_depth - data->map->min_depth);
 	red = 101 * (1 - percent) + (0xff * percent);
 	green = 67  * (1 - percent) + (0xff * percent);
 	blue = 33  * (1 - percent) + (0xff * percent);
 	return ((red << 16) | (green << 8) | blue);
-	
+
 }
 
 void	draw_line(int x, int y, int x1, int y1, t_data *data)
@@ -107,7 +107,6 @@ void	draw_line(int x, int y, int x1, int y1, t_data *data)
 	zoom(&x, &x1, &y, &y1, data);
 	z *= data->flattening;
 	z1 *= data->flattening;
-	
 	rot_x(&y, &z, data);
 	rot_x(&y1, &z1, data);
 	rot_y(&x, &z, data);
@@ -116,9 +115,7 @@ void	draw_line(int x, int y, int x1, int y1, t_data *data)
 	rot_z(&x1, &y1, data);
 	isometric(&x, &y, z);
 	isometric(&x1, &y1, z1);
-
 	shift(&x, &x1, &y, &y1, data);
-	
 	BresenhamLine(x, y, x1, y1, data, color);
 }
 
@@ -135,11 +132,15 @@ void swap(int *x, int *x1)
 void BresenhamLine(int x0, int y0, int x1, int y1, t_data *data, int color)
 {
 	int steep;
-
-	steep = abs(y1 - y0) > abs(x1 - x0) ? 1 : 0; 
+	int dx;
+	int dy;
+	int error;
+	int ystep;
+	
+	steep = abs(y1 - y0) > abs(x1 - x0) ? 1 : 0;
 	if (steep)
 	{
-		swap(&x0, &y0); 
+		swap(&x0, &y0);
 		swap(&x1, &y1);
 	}
 	if (x0 > x1)
@@ -147,10 +148,10 @@ void BresenhamLine(int x0, int y0, int x1, int y1, t_data *data, int color)
 		swap(&x0, &x1);
 		swap(&y0, &y1);
 	}
-	int dx = x1 - x0;
-	int dy = abs(y1 - y0);
-	int error = dx / 2;
-	int ystep = (y0 < y1) ? 1 : -1;
+	dx = x1 - x0;
+	dy = abs(y1 - y0);
+	error = dx / 2;
+	ystep = (y0 < y1) ? 1 : -1;
 	while ((x0 - x1) || (y0 - y1))
 	{
 		plot(steep ? y0 : x0, steep ? x0 : y0, data, color);
@@ -175,7 +176,7 @@ void	draw_map(t_data *data)
 		x = 0;
 		while (x < data->map->width)
 		{
-			
+
 			if (x < data->map->width - 1)
 				draw_line(x, y, x + 1, y, data);
 			if (y < data->map->height - 1)
@@ -185,5 +186,5 @@ void	draw_map(t_data *data)
 		y++;
 	}
 	mlx_put_image_to_window(data->mlx, data->win, data->img_ptr, 0, 0);
-	
+
 }

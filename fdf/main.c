@@ -7,72 +7,49 @@ void	redraw_window(t_data *data)
 	draw_map(data);
 }
 
-int	mouse_win1(int button, int x,int y, void *p)
-{
-	t_data *data;
-	
-
-	data = (t_data *)p;
-	
-	if (button == 1)
-	{
-		data->rotate_x += 0.1;
-		redraw_window(data);
-	}
-	if (button == 3)
-	{
-		data->rotate_y += 0.1;
-		redraw_window(data);
-	}
-
-	printf("Mouse in Win1, button %d at %dx%d.\n",button,x,y);
-	return (0);
-}
-
 int key(int key, void *p)
 {
 	t_data *data;
-	
+
 	data = (t_data *)p;
-	// printf("%d\n", key);
-	if (key == 45)
+	printf("%d\n", key);
+	if (key == MINUS)
 	{
 		data->flattening = data->flattening == 1 ? 1 : data->flattening - 1;
 		redraw_window(data);
 	}
-	if (key == 61)
+	if (key == PLUS)
 	{
 		data->flattening += 1;
 		redraw_window(data);
 	}
-	if (key == 65362)
+	if (key == ARROW_UP)
 	{
 		data->y_shift -= 30;
 		redraw_window(data);
 	}
-	if (key == 65364)
+	if (key == ARROW_DOWN)
 	{
 		data->y_shift += 30;
 		redraw_window(data);
 	}
-	if (key == 65361)
+	if (key == ARROW_LEFT)
 	{
 		data->x_shift -= 30;
 		redraw_window(data);
 	}
-	if (key == 65363)
+	if (key == ARROW_RIGHT)
 	{
 		data->x_shift += 30;
 		redraw_window(data);
 	}
-	if (key == 65307)
+	if (key == ESCAPE)
 	{
 		// free all
 		exit(0);
 	}
 	return (0);
 }
-
 
 int mouse_move(int x,int y, void *p)
 {
@@ -82,10 +59,10 @@ int mouse_move(int x,int y, void *p)
 	{
 		data->r_end->x = x;
 		data->r_end->y = y;
-		
+
 		data->rotate_y -= (data->r_start->x - data->r_end->x) * 0.002;
 		data->rotate_x -= (data->r_start->y - data->r_end->y) * 0.002;
-		
+
 		redraw_window(data);
 		data->r_start->x = x;
 		data->r_start->y = y;
@@ -102,26 +79,25 @@ int mouse_move(int x,int y, void *p)
 int	mouse_press(int button, int x,int y, void *p)
 {
 	t_data *data;
-	// (void)p;
 
 	data = (t_data *)p;
-	if (button == 4)
+	if (button == WHL_UP)
 	{
 		data->zoom +=1;
 		redraw_window(data);
 	}
-	if (button == 5)
+	if (button == WHL_DN)
 	{
 		data->zoom -=1;
 		redraw_window(data);
 	}
-	if (button == 1)
+	if (button == LMB)
 	{
 		data->mb1_pressed = 1;
 		data->r_start->x = x;
 		data->r_start->y = y;
 	}
-	if (button == 3)
+	if (button == RMB)
 	{
 		data->mb2_pressed = 1;
 		data->r_start->x = x;
@@ -133,20 +109,17 @@ int	mouse_press(int button, int x,int y, void *p)
 int	mouse_release(int button, int x,int y, void *p)
 {
 	t_data *data;
-	// (void)p;
 
+	(void)x;
+	(void)y;
 	data = (t_data *)p;
-	if (button == 1)
+	if (button == LMB)
 	{
-		printf("Release, at %dx%d.\n",x,y);
 		data->mb1_pressed = 0;
-		printf("Rotate from %dx%d to %dx%d.\n", data->r_start->x ,data->r_start->y, data->r_end->x, data->r_end->y);	
 	}
-	if (button == 3)
+	if (button == RMB)
 	{
-		printf("Release, at %dx%d.\n",x,y);
 		data->mb2_pressed = 0;
-		printf("Rotate from %dx%d to %dx%d.\n", data->r_start->x ,data->r_start->y, data->r_end->x, data->r_end->y);	
 	}
 	return (0);
 }
@@ -155,7 +128,7 @@ int	mouse_release(int button, int x,int y, void *p)
 t_data	*init(void)
 {
 	t_data	*data;
-	
+
 	data = (t_data *)ft_memalloc(sizeof(t_data));
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "FDF");
@@ -188,18 +161,16 @@ int main(int argc, char **argv)
 {
 
 	t_data *data;
-	
+
 	if (argc != 2)
 		return (1);
 	data = init();
 
 	read_file(argv[1], data);
-	
+
 
 	draw_map(data);
-	
-	// mlx_mouse_hook(data->win, mouse_win1, data);
-	
+
 	mlx_key_hook(data->win, key, data);
 	mlx_hook(data->win, MotionNotify, PointerMotionMask, mouse_move, data);
 	mlx_hook(data->win, ButtonPress, ButtonPressMask, mouse_press, data);
