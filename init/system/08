@@ -1,0 +1,2 @@
+ssh-keygen
+/home/${your_home}/.ssh/id_rsa
