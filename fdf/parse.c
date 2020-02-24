@@ -1,47 +1,41 @@
 #include "fdf.h"
 
-int	get_heigth(char *file_name, t_map *map)
+int	get_heigth(int fd, t_map *map)
 {
 	char *line;
-	int fd;
 	int height;
 
-	fd = open(file_name, O_RDONLY, 0);
-	if (fd < 0)
-	{
-		close(fd);
-		kill(1);
-	}
+	// fd = open(file_name, O_RDONLY, 0);
+	// if (fd < 0)
+	// {
+	// 	close(fd);
+	// 	kill(1);
+	// }
 	height = 0;
 	while (get_next_line(fd, &line))
 	{
-	(void)map;
-	// 	if (count_words(line, ' ') != map->width)
-	// 	{
+	// (void)map;
+	printf("line: %s\n", line);
+	printf("err width: %d\n", map->width);
+		if (count_words(line, ' ') != map->width)
+		{
 
-	// 		// printf("err width: %d\n", map->width);
-	// 		printf("line: %s\n", line);
-	// 		kill(5);
-	// 	}
+			// 
+			
+			kill(5);
+		}
 		height++;
 		free(line);
 	}
 	close(fd);
-	return (height);
+	return (height + 1);
 }
 
-int		get_width(char *file_name)
+int		get_width(int fd)
 {
 	char *line;
-	int fd;
 	int width;
-
-	fd = open(file_name, O_RDONLY, 0);
-	if (fd < 0)
-	{
-		close(fd);
-		kill(1);
-	}
+	
 	get_next_line(fd, &line);
 	width = count_words(line, ' ');
 	free(line);
@@ -77,9 +71,15 @@ int	read_file(char *file_name, t_data *data)
 	t_map *map;
 
 	map = data->map;
-	map->width = get_width(file_name);
-	map->height = get_heigth(file_name, map);
-
+	fd = open(file_name, O_RDONLY, 0);
+	if (fd < 0)
+	{
+		close(fd);
+		kill(1);
+	}
+	map->width = get_width(fd);
+	map->height = get_heigth(fd, map);
+	close(fd);
 	if (!(map->depth_arr = (int **)malloc(sizeof(int *) * (map->height + 1))))
 		kill(2);
 	i = 0;
