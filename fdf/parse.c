@@ -15,22 +15,20 @@ int	get_heigth(char *file_name, t_map *map)
 	height = 0;
 	while (get_next_line(fd, &line))
 	{
+	(void)map;
+	// 	if (count_words(line, ' ') != map->width)
+	// 	{
 
-		// printf("w: %d\n", count_words(line, ' '));
-		printf("2 %s\n", line);
-		if (count_words(line, ' ') != map->width)
-		{
-			printf("hh%d\n", height);
-			kill(5);
-		}
-
+	// 		// printf("err width: %d\n", map->width);
+	// 		printf("line: %s\n", line);
+	// 		kill(5);
+	// 	}
 		height++;
 		free(line);
 	}
 	close(fd);
 	return (height);
 }
-
 
 int		get_width(char *file_name)
 {
@@ -45,9 +43,7 @@ int		get_width(char *file_name)
 		kill(1);
 	}
 	get_next_line(fd, &line);
-	printf("1 %s\n", line);
 	width = count_words(line, ' ');
-	printf("w1: %d\n", width);
 	free(line);
 	close(fd);
 	return (width);
@@ -62,7 +58,7 @@ void fill_depth(int *depth_line, char *line, t_map *map)
 	nums = ft_strsplit(line, ' ');
 	while (nums[i])
 	{
-		// if (!ft_isdigit(nums[i])) // check string for nums
+		// if (!ft_isdigit(*(nums[i])))
 		// 	kill(4);
 		depth_line[i] = ft_atoi(nums[i]);
 		map->max_depth = map->max_depth > depth_line[i] ? map->max_depth : depth_line[i];

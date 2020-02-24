@@ -12,7 +12,6 @@ int key(int key, void *p)
 	t_data *data;
 
 	data = (t_data *)p;
-	printf("%d\n", key);
 	if (key == MINUS)
 	{
 		data->flattening = data->flattening == 1 ? 1 : data->flattening - 1;
@@ -45,7 +44,6 @@ int key(int key, void *p)
 	}
 	if (key == ESCAPE)
 	{
-		// free all
 		exit(0);
 	}
 	return (0);
@@ -172,7 +170,6 @@ int main(int argc, char **argv)
 	read_file(argv[1], data);
 
 	draw_map(data);
-
 	mlx_key_hook(data->win, key, data);
 	mlx_hook(data->win, MotionNotify, PointerMotionMask, mouse_move, data);
 	mlx_hook(data->win, ButtonPress, ButtonPressMask, mouse_press, data);
