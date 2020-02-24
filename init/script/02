@@ -1,0 +1,3 @@
+DUSR=$1
+pgrep -u $DUSR | while read PID; do sudo kill $PID; done
+sudo userdel $DUSR

@@ -1,0 +1,2 @@
+whois slash16.org -> find Name Server - this is a hosting server for slash16
+then whois ${Name Server} -> find registrant and admin organization - Amazon Technologies, Inc.
